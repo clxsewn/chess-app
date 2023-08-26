@@ -1,15 +1,19 @@
 import './App.css'
-import {defaultPiecesTheme as dpt} from './piecesThemes.ts'
+import { defaultPiecesTheme as dpt } from './piecesThemes.ts'
+import Board from './components/Board'
+import Theme from './components/Theme'
 
 function App() {
+    const pieces = Object.values(dpt)
 
-    const pieces = Object.keys(dpt)
-
-  return (
-    <>
-        { pieces.map((p) => <img key={p} src={dpt[p]} />) }
-    </>
-  )
+    return (
+        <Theme>
+            {pieces.map((p) => (
+                <img key={p} src={p} />
+            ))}
+            <Board />
+        </Theme>
+    )
 }
 
 export default App

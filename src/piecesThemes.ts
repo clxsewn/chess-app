@@ -11,26 +11,24 @@ import bb1 from './assets/piecesSet1/bb.svg'
 import nb1 from './assets/piecesSet1/nb.svg'
 import pb1 from './assets/piecesSet1/pb.svg'
 
-
-export type SVGpath = string;
+export type SVGpath = string
 
 export interface piecesTheme {
-    kingW: SVGpath,
-    queenW: SVGpath,
-    rookW: SVGpath,
-    bishopW: SVGpath,
-    knightW: SVGpath,
-    pawnW: SVGpath,
-    kingB: SVGpath,
-    queenB: SVGpath,
-    rookB: SVGpath,
-    bishopB: SVGpath,
-    knightB: SVGpath,
-    pawnB: SVGpath,
+    kingW: SVGpath
+    queenW: SVGpath
+    rookW: SVGpath
+    bishopW: SVGpath
+    knightW: SVGpath
+    pawnW: SVGpath
+    kingB: SVGpath
+    queenB: SVGpath
+    rookB: SVGpath
+    bishopB: SVGpath
+    knightB: SVGpath
+    pawnB: SVGpath
 }
 
-export const piecesThemes: piecesTheme[] =
-[
+export const piecesThemes: piecesTheme[] = [
     {
         kingW: kw1,
         queenW: qw1,
@@ -44,8 +42,8 @@ export const piecesThemes: piecesTheme[] =
         bishopB: bb1,
         knightB: nb1,
         pawnB: pb1,
-    }
-];
+    },
+]
 
-export default piecesThemes;
-export const defaultPiecesTheme: piecesTheme = piecesThemes[0];
+export default piecesThemes
+export const defaultPiecesTheme: piecesTheme = piecesThemes[0]
