@@ -10,10 +10,17 @@ export interface boardTheme {
 
 const boardThemes: boardTheme[] = [
     {
-        name: 'default',
+        name: 'Default',
         colors: {
             black: '#779954',
             white: '#e9edcc',
+        },
+    },
+    {
+        name: 'Mono',
+        colors: {
+            black: '#000',
+            white: '#fff',
         },
     },
 ]

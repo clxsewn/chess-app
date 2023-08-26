@@ -1,4 +1,27 @@
 .tile {
   width: 100px;
   height: 100px;
+
+  position: relative;
+
+  .str-symbol, .col-symbol {
+    position: absolute;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 1.1em;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .str-symbol {
+    top: 6px;
+    left: 10px;
+  }
+
+  .col-symbol {
+    bottom: 6px;
+    right: 10px;
+  }
 }
