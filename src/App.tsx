@@ -1,6 +1,6 @@
 import './App.css'
 import { defaultPiecesTheme as dpt } from './piecesThemes.ts'
-import Board from './components/Board'
+import Game from './components/Game'
 import Theme from './components/Theme'
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
             {pieces.map((p) => (
                 <img key={p} src={p} />
             ))}
-            <Board />
+            <Game />
         </Theme>
     )
 }
