@@ -6,11 +6,15 @@ import 'primereact/resources/primereact.min.css'
 import 'primereact/resources/themes/lara-light-indigo/theme.css'
 import 'primeicons/primeicons.css'
 import { PrimeReactProvider } from 'primereact/api'
+import { Provider } from 'react-redux'
+import { store } from './store.ts'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <PrimeReactProvider>
-            <App />
-        </PrimeReactProvider>
+        <Provider store={store}>
+            <PrimeReactProvider>
+                <App />
+            </PrimeReactProvider>
+        </Provider>
     </React.StrictMode>
 )

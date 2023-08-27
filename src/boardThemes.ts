@@ -1,6 +1,6 @@
 export type Color = string
 
-export interface boardTheme {
+export interface tilesTheme {
     name: string
     colors: {
         black: string
@@ -8,7 +8,7 @@ export interface boardTheme {
     }
 }
 
-const boardThemes: boardTheme[] = [
+const tilesThemes: tilesTheme[] = [
     {
         name: 'Default',
         colors: {
@@ -17,13 +17,13 @@ const boardThemes: boardTheme[] = [
         },
     },
     {
-        name: 'Mono',
+        name: 'Aqua',
         colors: {
-            black: '#000',
-            white: '#fff',
+            black: 'rgb(0, 102, 153)',
+            white: 'rgb(153, 204, 255)',
         },
     },
 ]
 
-export default boardThemes
-export const defaultBoardTheme: boardTheme = boardThemes[0]
+export default tilesThemes
+export const defaultBoardTheme: tilesTheme = tilesThemes[0]

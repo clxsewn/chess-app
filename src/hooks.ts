@@ -1,4 +1,7 @@
-//
+import { AppDispatch, RootState } from './store.ts'
+import { TypedUseSelectorHook } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+
 export function useView(): string[] {
     const str = ['8', '7', '6', '5', '4', '3', '2', '1']
     const col = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -13,3 +16,6 @@ export function useView(): string[] {
 
     return grid
 }
+
+export const useAppDispatch: () => AppDispatch = useDispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
