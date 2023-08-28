@@ -7,7 +7,7 @@ export default function Board() {
     const grid = useView()
 
     const colors = useAppSelector((state) => state.appearance.tiles)
-    console.log(colors)
+    const board = useAppSelector((state) => state.board)
 
     return (
         <div className="board">
@@ -20,6 +20,7 @@ export default function Board() {
                             ? [colors.colors.black, colors.colors.white]
                             : [colors.colors.white, colors.colors.black]
                     }
+                    piece={board[t] ? board[t] : null}
                 />
             ))}
         </div>
