@@ -14,34 +14,34 @@ import pb1 from './assets/piecesSet1/pb.svg'
 export type SVGpath = string
 
 export interface piecesTheme {
-    kingW: SVGpath
-    queenW: SVGpath
-    rookW: SVGpath
-    bishopW: SVGpath
-    knightW: SVGpath
-    pawnW: SVGpath
-    kingB: SVGpath
-    queenB: SVGpath
-    rookB: SVGpath
-    bishopB: SVGpath
-    knightB: SVGpath
-    pawnB: SVGpath
+    kw: SVGpath
+    qw: SVGpath
+    rw: SVGpath
+    bw: SVGpath
+    nw: SVGpath
+    pw: SVGpath
+    kb: SVGpath
+    qb: SVGpath
+    rb: SVGpath
+    bb: SVGpath
+    nb: SVGpath
+    pb: SVGpath
 }
 
 export const piecesThemes: piecesTheme[] = [
     {
-        kingW: kw1,
-        queenW: qw1,
-        rookW: rw1,
-        bishopW: bw1,
-        knightW: nw1,
-        pawnW: pw1,
-        kingB: kb1,
-        queenB: qb1,
-        rookB: rb1,
-        bishopB: bb1,
-        knightB: nb1,
-        pawnB: pb1,
+        kw: kw1,
+        qw: qw1,
+        rw: rw1,
+        bw: bw1,
+        nw: nw1,
+        pw: pw1,
+        kb: kb1,
+        qb: qb1,
+        rb: rb1,
+        bb: bb1,
+        nb: nb1,
+        pb: pb1,
     },
 ]
 

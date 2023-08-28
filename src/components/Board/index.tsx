@@ -6,7 +6,7 @@ import { useAppSelector, useView } from '../../hooks.ts'
 export default function Board() {
     const grid = useView()
 
-    const colors = useAppSelector((state) => state.appearance.tiles)
+    const { tiles, pieces } = useAppSelector((state) => state.appearance)
     const board = useAppSelector((state) => state.board)
 
     return (
@@ -17,10 +17,14 @@ export default function Board() {
                     id={t}
                     colors={
                         isBlackTile(t)
-                            ? [colors.colors.black, colors.colors.white]
-                            : [colors.colors.white, colors.colors.black]
+                            ? [tiles.colors.black, tiles.colors.white]
+                            : [tiles.colors.white, tiles.colors.black]
                     }
-                    piece={board[t] ? board[t] : null}
+                    piece={
+                        board[t]
+                            ? pieces[board[t].piece + board[t].color]
+                            : undefined
+                    }
                 />
             ))}
         </div>

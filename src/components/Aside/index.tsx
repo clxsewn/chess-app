@@ -9,8 +9,6 @@ export default function Aside() {
     const selected = useAppSelector((state) => state.appearance.tiles)
     const dispatch = useAppDispatch()
 
-    console.log(selected)
-
     return (
         <aside>
             <TabView>

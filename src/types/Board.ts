@@ -1,5 +1,5 @@
 export type TPiece = 'p' | 'r' | 'n' | 'b' | 'q' | 'k'
-export type TColor = 'w' | 'h'
+export type TColor = 'w' | 'b'
 
 export interface TTile {
     piece: TPiece

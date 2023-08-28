@@ -1,5 +1,5 @@
 import './styles.scss'
-import { TTile } from '../../types/Board.ts'
+import { piecesTheme } from '../../piecesThemes.ts'
 
 export default function Tile({
     id,
@@ -8,10 +8,8 @@ export default function Tile({
 }: {
     id: string
     colors: string[]
-    piece: TTile | null
+    piece?: string
 }) {
-    console.log(piece)
-
     return (
         <div
             className={`tile`}
@@ -19,6 +17,7 @@ export default function Tile({
         >
             {id[0] === 'a' && <span className="str-symbol">{id[1]}</span>}
             {id[1] === '1' && <span className="col-symbol">{id[0]}</span>}
+            {piece && <img src={piece} className="piece" draggable={false} />}
         </div>
     )
 }

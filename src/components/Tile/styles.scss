@@ -27,6 +27,15 @@ $board-border-radius: 6px;
     right: 10px;
   }
 
+  & .piece {
+    width: 90%;
+    height: 90%;
+    margin: 5% auto 0 auto;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+  }
+
   &:first-child {
     border-top-left-radius: $board-border-radius;
   }
