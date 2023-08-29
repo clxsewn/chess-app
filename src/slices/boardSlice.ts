@@ -42,8 +42,16 @@ const initialState: Board = {
 export const boardSlice = createSlice({
     name: 'appearance',
     initialState: initialState,
-    reducers: {},
+    reducers: {
+        move: (state, action) => {
+            // TODO: Move validation
+            if (state[action.payload.to] === undefined) {
+                state[action.payload.to] = { ...state[action.payload.from] }
+                delete state[action.payload.from]
+            }
+        },
+    },
 })
 
-// export const {} = boardSlice.actions
+export const { move } = boardSlice.actions
 export default boardSlice.reducer

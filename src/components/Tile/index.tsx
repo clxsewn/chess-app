@@ -1,4 +1,6 @@
 import './styles.scss'
+import { useAppDispatch } from '../../hooks.ts'
+import { move } from '../../slices/boardSlice.ts'
 
 export default function Tile({
     id,
@@ -9,6 +11,8 @@ export default function Tile({
     colors: string[]
     piece?: string
 }) {
+    const dispatch = useAppDispatch()
+
     function dragStartHandler(e: React.DragEvent, id: string) {
         e.dataTransfer.clearData()
         e.dataTransfer.setData('startId', id)
@@ -29,6 +33,7 @@ export default function Tile({
     function dropHandler(e: React.DragEvent, id: string) {
         e.preventDefault()
         console.log(`${e.dataTransfer.getData('startId')} > ${id}`)
+        dispatch(move({ from: e.dataTransfer.getData('startId'), to: id }))
     }
 
     return (
