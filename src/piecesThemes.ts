@@ -26,6 +26,7 @@ export interface piecesTheme {
     bb: SVGpath
     nb: SVGpath
     pb: SVGpath
+    [key: string]: SVGpath
 }
 
 export const piecesThemes: piecesTheme[] = [
