@@ -22,7 +22,7 @@ export default function Board() {
                     }
                     piece={
                         board[t]
-                            ? pieces[board[t].piece + board[t].color]
+                            ? pieces[board[t].color][board[t].piece]
                             : undefined
                     }
                 />

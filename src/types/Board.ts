@@ -1,5 +1,7 @@
-export type TPiece = 'p' | 'r' | 'n' | 'b' | 'q' | 'k'
-export type TColor = 'w' | 'b'
+import { IPieces, IPiecesTheme } from '../piecesThemes.ts'
+
+export type TPiece = keyof IPieces
+export type TColor = keyof IPiecesTheme
 
 export interface TTile {
     piece: TPiece

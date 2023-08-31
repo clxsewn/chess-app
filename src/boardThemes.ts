@@ -3,8 +3,8 @@ export type Color = string
 export interface tilesTheme {
     name: string
     colors: {
-        black: string
-        white: string
+        black: Color
+        white: Color
     }
 }
 
@@ -19,8 +19,8 @@ const tilesThemes: tilesTheme[] = [
     {
         name: 'Aqua',
         colors: {
-            black: 'rgb(0, 102, 153)',
-            white: 'rgb(153, 204, 255)',
+            black: '#006699',
+            white: '#99CCFF',
         },
     },
 ]
