@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board } from '../types/Board.ts'
 
 const initialState: Board = {
@@ -40,14 +40,42 @@ const initialState: Board = {
 }
 
 export const boardSlice = createSlice({
-    name: 'appearance',
+    name: 'board',
     initialState: initialState,
     reducers: {
-        move: (state, action) => {
+        move: (state, action: PayloadAction<{ from: string; to: string }>) => {
+            const from = state[action.payload.from]
+
             // TODO: Move validation
-            if (state[action.payload.to] === undefined) {
-                state[action.payload.to] = { ...state[action.payload.from] }
-                delete state[action.payload.from]
+            if (action.payload.from !== action.payload.to) {
+                switch (from.piece) {
+                    case 'pawn':
+                        console.log('pawn')
+                        break
+
+                    case 'rook':
+                        console.log('rook')
+                        break
+
+                    case 'knight':
+                        console.log('knight')
+                        break
+
+                    case 'bishop':
+                        console.log('bishop')
+                        break
+
+                    case 'queen':
+                        console.log('queen')
+                        break
+
+                    case 'king':
+                        console.log('king')
+                        break
+
+                    default:
+                        console.log('unknown')
+                }
             }
         },
     },

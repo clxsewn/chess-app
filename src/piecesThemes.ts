@@ -27,8 +27,9 @@ export interface IPiecesTheme {
     black: IPieces
 }
 
-export const piecesThemes: IPiecesTheme[] = [
+export const piecesThemes: (IPiecesTheme & { name: string })[] = [
     {
+        name: 'Default',
         white: {
             king: kw1,
             queen: qw1,

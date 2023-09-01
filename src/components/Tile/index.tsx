@@ -1,6 +1,7 @@
-import './styles.scss'
+import { DragEvent } from 'react'
 import { useAppDispatch } from '../../hooks.ts'
 import { move } from '../../slices/boardSlice.ts'
+import './styles.scss'
 
 export default function Tile({
     id,
@@ -13,24 +14,24 @@ export default function Tile({
 }) {
     const dispatch = useAppDispatch()
 
-    function dragStartHandler(e: React.DragEvent, id: string) {
+    function dragStartHandler(e: DragEvent, id: string) {
         e.dataTransfer.clearData()
         e.dataTransfer.setData('startId', id)
     }
 
-    function dragLeaveHandler(e: React.DragEvent) {
+    function dragLeaveHandler(e: DragEvent) {
         e.preventDefault()
     }
 
-    function dragEndHandler(e: React.DragEvent) {
+    function dragEndHandler(e: DragEvent) {
         e.preventDefault()
     }
 
-    function dragOverHandler(e: React.DragEvent) {
+    function dragOverHandler(e: DragEvent) {
         e.preventDefault()
     }
 
-    function dropHandler(e: React.DragEvent, id: string) {
+    function dropHandler(e: DragEvent, id: string) {
         e.preventDefault()
         console.log(`${e.dataTransfer.getData('startId')} > ${id}`)
         dispatch(move({ from: e.dataTransfer.getData('startId'), to: id }))
