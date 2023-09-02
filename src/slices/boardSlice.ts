@@ -48,6 +48,8 @@ export const boardSlice = createSlice({
 
             // TODO: Move validation
             if (action.payload.from !== action.payload.to) {
+                const possibleMoves = new Set<string>()
+
                 switch (from.piece) {
                     case 'pawn':
                         console.log('pawn')
