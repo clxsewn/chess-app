@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board } from '../types/Board.ts'
+import { mov } from '../utils.ts'
 
 const initialState: Board = {
     // WHITE PLAYER
@@ -45,38 +46,81 @@ export const boardSlice = createSlice({
     reducers: {
         move: (state, action: PayloadAction<{ from: string; to: string }>) => {
             const from = state[action.payload.from]
+            const { from: fromId, to: toId } = action.payload
 
             // TODO: Move validation
             if (action.payload.from !== action.payload.to) {
-                const possibleMoves = new Set<string>()
-
+                let possibleMoves = new Set<string>()
                 switch (from.piece) {
                     case 'pawn':
-                        console.log('pawn')
+                        if (from.color === 'white') {
+                            // WHITE PAWN
+                            if (fromId[1] === '2') {
+                                possibleMoves.add(mov(fromId, ['up']))
+                                possibleMoves.add(mov(fromId, ['up', 'up']))
+                            } else {
+                                possibleMoves.add(mov(fromId, ['up']))
+                            }
+                        } else {
+                            // BLACK PAWN
+                            if (fromId[1] === '7') {
+                                possibleMoves.add(mov(fromId, ['down']))
+                                possibleMoves.add(mov(fromId, ['down', 'down']))
+                            } else {
+                                possibleMoves.add(mov(fromId, ['down']))
+                            }
+                        }
+
                         break
 
                     case 'rook':
-                        console.log('rook')
                         break
 
                     case 'knight':
-                        console.log('knight')
+                        possibleMoves
+                            .add(mov(fromId, ['up', 'up', 'left']))
+                            .add(mov(fromId, ['up', 'up', 'right']))
+                            .add(mov(fromId, ['right', 'right', 'up']))
+                            .add(mov(fromId, ['right', 'right', 'down']))
+                            .add(mov(fromId, ['down', 'down', 'right']))
+                            .add(mov(fromId, ['down', 'down', 'left']))
+                            .add(mov(fromId, ['left', 'left', 'down']))
+                            .add(mov(fromId, ['left', 'left', 'up']))
                         break
 
                     case 'bishop':
-                        console.log('bishop')
                         break
 
                     case 'queen':
-                        console.log('queen')
                         break
 
                     case 'king':
-                        console.log('king')
+                        possibleMoves
+                            .add(mov(fromId, ['up']))
+                            .add(mov(fromId, ['up', 'right']))
+                            .add(mov(fromId, ['right']))
+                            .add(mov(fromId, ['right', 'down']))
+                            .add(mov(fromId, ['down']))
+                            .add(mov(fromId, ['down', 'left']))
+                            .add(mov(fromId, ['left']))
+                            .add(mov(fromId, ['left', 'up']))
                         break
+                }
 
-                    default:
-                        console.log('unknown')
+                possibleMoves = new Set(
+                    [...possibleMoves].filter(
+                        (m) =>
+                            (!(m in state) || state[m].color !== from.color) &&
+                            m[0] >= 'a' &&
+                            m[0] <= 'h' &&
+                            m[1] >= '1' &&
+                            m[1] <= '8'
+                    )
+                )
+
+                if (possibleMoves.has(toId)) {
+                    state[toId] = from
+                    delete state[fromId]
                 }
             }
         },
