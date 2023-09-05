@@ -1,3 +1,5 @@
+import { TColor } from './types/Board.ts'
+
 export function isBlackTile(id: string): boolean {
     return (id.charCodeAt(0) + parseInt(id[1])) % 2 === 0
 }
@@ -23,4 +25,8 @@ export function mov(pos: string, moves: direction[]): string {
                 }`
         }
     }, pos)
+}
+
+export function opposite(piece: TColor): TColor {
+    return piece === 'white' ? 'black' : 'white'
 }

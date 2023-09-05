@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board } from '../types/Board.ts'
-import { mov } from '../utils.ts'
+import { mov, opposite } from '../utils.ts'
 
 const initialState: Board = {
     // WHITE PLAYER
@@ -51,23 +51,32 @@ export const boardSlice = createSlice({
             // TODO: Move validation
             if (action.payload.from !== action.payload.to) {
                 let possibleMoves = new Set<string>()
+                const direction = from.color === 'white' ? 'up' : 'down'
                 switch (from.piece) {
                     case 'pawn':
-                        if (from.color === 'white') {
-                            // WHITE PAWN
-                            if (fromId[1] === '2') {
-                                possibleMoves.add(mov(fromId, ['up']))
-                                possibleMoves.add(mov(fromId, ['up', 'up']))
-                            } else {
-                                possibleMoves.add(mov(fromId, ['up']))
+                        if (!(toId in state)) {
+                            possibleMoves.add(mov(fromId, [direction]))
+                            if (
+                                ((fromId[1] === '2' &&
+                                    from.color === 'white') ||
+                                    (fromId[1] === '7' &&
+                                        from.color === 'black')) &&
+                                !(mov(fromId, [direction]) in state)
+                            ) {
+                                possibleMoves.add(
+                                    mov(fromId, [direction, direction])
+                                )
                             }
                         } else {
-                            // BLACK PAWN
-                            if (fromId[1] === '7') {
-                                possibleMoves.add(mov(fromId, ['down']))
-                                possibleMoves.add(mov(fromId, ['down', 'down']))
-                            } else {
-                                possibleMoves.add(mov(fromId, ['down']))
+                            if (mov(fromId, [direction, 'left']) in state) {
+                                possibleMoves.add(
+                                    mov(fromId, [direction, 'left'])
+                                )
+                            }
+                            if (mov(fromId, [direction, 'right']) in state) {
+                                possibleMoves.add(
+                                    mov(fromId, [direction, 'right'])
+                                )
                             }
                         }
 
