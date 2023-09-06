@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board } from '../types/Board.ts'
-import { mov, opposite } from '../utils.ts'
+import { mov } from '../utils.ts'
 
 const initialState: Board = {
     // WHITE PLAYER
