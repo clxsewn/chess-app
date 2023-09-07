@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board } from '../types/Board.ts'
-import { mov } from '../utils.ts'
+import { mov, repeat } from '../utils.ts'
 
 const initialState: Board = {
     // WHITE PLAYER
@@ -83,6 +83,21 @@ export const boardSlice = createSlice({
                         break
 
                     case 'rook':
+                        repeat(fromId, ['up'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['right'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['down'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['left'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
                         break
 
                     case 'knight':
@@ -98,9 +113,56 @@ export const boardSlice = createSlice({
                         break
 
                     case 'bishop':
+                        repeat(fromId, ['up', 'left'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['up', 'right'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['down', 'right'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['down', 'left'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
                         break
 
                     case 'queen':
+                        repeat(fromId, ['up'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['right'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['down'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['left'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['up', 'left'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['up', 'right'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['down', 'right'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
+                        repeat(fromId, ['down', 'left'], state).forEach((p) =>
+                            possibleMoves.add(p)
+                        )
+
                         break
 
                     case 'king':
