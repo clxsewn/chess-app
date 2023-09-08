@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board } from '../types/Board.ts'
-import { mov, repeat } from '../utils.ts'
+import { getPossibleMoves } from '../utils.ts'
 
 const initialState: Board = {
     // WHITE PLAYER
@@ -48,138 +48,9 @@ export const boardSlice = createSlice({
             const from = state[action.payload.from]
             const { from: fromId, to: toId } = action.payload
 
-            // TODO: Move validation
-            if (action.payload.from !== action.payload.to) {
-                let possibleMoves = new Set<string>()
-                const direction = from.color === 'white' ? 'up' : 'down'
-                switch (from.piece) {
-                    case 'pawn':
-                        if (!(toId in state)) {
-                            possibleMoves.add(mov(fromId, [direction]))
-                            if (
-                                ((fromId[1] === '2' &&
-                                    from.color === 'white') ||
-                                    (fromId[1] === '7' &&
-                                        from.color === 'black')) &&
-                                !(mov(fromId, [direction]) in state)
-                            ) {
-                                possibleMoves.add(
-                                    mov(fromId, [direction, direction])
-                                )
-                            }
-                        } else {
-                            if (mov(fromId, [direction, 'left']) in state) {
-                                possibleMoves.add(
-                                    mov(fromId, [direction, 'left'])
-                                )
-                            }
-                            if (mov(fromId, [direction, 'right']) in state) {
-                                possibleMoves.add(
-                                    mov(fromId, [direction, 'right'])
-                                )
-                            }
-                        }
-
-                        break
-
-                    case 'rook':
-                        repeat(fromId, ['up'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['right'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['down'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['left'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-                        break
-
-                    case 'knight':
-                        possibleMoves
-                            .add(mov(fromId, ['up', 'up', 'left']))
-                            .add(mov(fromId, ['up', 'up', 'right']))
-                            .add(mov(fromId, ['right', 'right', 'up']))
-                            .add(mov(fromId, ['right', 'right', 'down']))
-                            .add(mov(fromId, ['down', 'down', 'right']))
-                            .add(mov(fromId, ['down', 'down', 'left']))
-                            .add(mov(fromId, ['left', 'left', 'down']))
-                            .add(mov(fromId, ['left', 'left', 'up']))
-                        break
-
-                    case 'bishop':
-                        repeat(fromId, ['up', 'left'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['up', 'right'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['down', 'right'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['down', 'left'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-                        break
-
-                    case 'queen':
-                        repeat(fromId, ['up'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['right'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['down'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['left'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['up', 'left'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['up', 'right'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['down', 'right'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        repeat(fromId, ['down', 'left'], state).forEach((p) =>
-                            possibleMoves.add(p)
-                        )
-
-                        break
-
-                    case 'king':
-                        possibleMoves
-                            .add(mov(fromId, ['up']))
-                            .add(mov(fromId, ['up', 'right']))
-                            .add(mov(fromId, ['right']))
-                            .add(mov(fromId, ['right', 'down']))
-                            .add(mov(fromId, ['down']))
-                            .add(mov(fromId, ['down', 'left']))
-                            .add(mov(fromId, ['left']))
-                            .add(mov(fromId, ['left', 'up']))
-                        break
-                }
-
-                possibleMoves = new Set(
-                    [...possibleMoves].filter(
+            if (fromId !== toId) {
+                const possibleMoves = new Set(
+                    getPossibleMoves(state, fromId, toId).filter(
                         (m) =>
                             (!(m in state) || state[m].color !== from.color) &&
                             m[0] >= 'a' &&
