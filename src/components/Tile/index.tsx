@@ -7,10 +7,12 @@ export default function Tile({
     id,
     colors,
     piece,
+    movable,
 }: {
     id: string
-    colors: string[]
+    colors: [string, string]
     piece?: string
+    movable: boolean
 }) {
     const dispatch = useAppDispatch()
 
@@ -52,7 +54,7 @@ export default function Tile({
                 <img
                     src={piece}
                     className="piece"
-                    draggable={true}
+                    draggable={movable}
                     onDragStart={(e) => dragStartHandler(e, id)}
                 />
             )}

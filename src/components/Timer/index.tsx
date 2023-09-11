@@ -1,5 +1,3 @@
-import { useTimer } from 'react-timer-hook'
-
 export default function Timer({
     seconds,
     minutes,

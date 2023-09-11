@@ -7,7 +7,7 @@ export default function Board() {
     const grid = useView()
 
     const { tiles, pieces } = useAppSelector((state) => state.appearance)
-    const board = useAppSelector((state) => state.board)
+    const { board, turn } = useAppSelector((state) => state.board)
 
     return (
         <div className="board">
@@ -25,6 +25,7 @@ export default function Board() {
                             ? pieces[board[t].color][board[t].piece]
                             : undefined
                     }
+                    movable={board[t]?.color === turn}
                 />
             ))}
         </div>
