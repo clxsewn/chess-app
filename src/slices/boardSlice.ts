@@ -4,7 +4,8 @@ import { getPossibleMoves, opposite } from '../utils.ts'
 
 interface Game {
     board: Board
-    turn: TColor
+    turn: TColor | 'none'
+    gameStarted: boolean
 }
 
 const initialState: Game = {
@@ -45,7 +46,8 @@ const initialState: Game = {
         g7: { piece: 'pawn', color: 'black' },
         h7: { piece: 'pawn', color: 'black' },
     },
-    turn: 'white',
+    turn: 'none',
+    gameStarted: false,
 }
 
 export const boardSlice = createSlice({
@@ -57,7 +59,11 @@ export const boardSlice = createSlice({
             const from = board[action.payload.from]
             const { from: fromId, to: toId } = action.payload
 
-            if (fromId !== toId && board[fromId].color === turn) {
+            if (
+                fromId !== toId &&
+                board[fromId].color === turn &&
+                state.gameStarted
+            ) {
                 const possibleMoves = new Set(
                     getPossibleMoves(board, fromId, toId).filter(
                         (m) =>
@@ -77,8 +83,12 @@ export const boardSlice = createSlice({
                 }
             }
         },
+        start: (state) => {
+            state.turn = 'white'
+            state.gameStarted = true
+        },
     },
 })
 
-export const { move } = boardSlice.actions
+export const { move, start } = boardSlice.actions
 export default boardSlice.reducer
