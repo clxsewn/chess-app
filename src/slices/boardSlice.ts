@@ -2,10 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board, TColor } from '../types/Board.ts'
 import { getPossibleMoves, opposite } from '../utils.ts'
 
+type TColorOrNone = TColor | 'none'
+
 interface Game {
     board: Board
-    turn: TColor | 'none'
+    turn: TColorOrNone
     gameStarted: boolean
+    winner: TColorOrNone
 }
 
 const initialState: Game = {
@@ -46,12 +49,13 @@ const initialState: Game = {
         g7: { piece: 'pawn', color: 'black' },
         h7: { piece: 'pawn', color: 'black' },
     },
-    turn: 'none',
     gameStarted: false,
+    turn: 'none',
+    winner: 'none',
 }
 
-export const boardSlice = createSlice({
-    name: 'board',
+export const gameSlice = createSlice({
+    name: 'game',
     initialState: initialState,
     reducers: {
         move: (state, action: PayloadAction<{ from: string; to: string }>) => {
@@ -87,8 +91,12 @@ export const boardSlice = createSlice({
             state.turn = 'white'
             state.gameStarted = true
         },
+        end: (state, action: PayloadAction<TColor>) => {
+            state.turn = 'none'
+            state.winner = action.payload
+        },
     },
 })
 
-export const { move, start } = boardSlice.actions
-export default boardSlice.reducer
+export const { move, start } = gameSlice.actions
+export default gameSlice.reducer

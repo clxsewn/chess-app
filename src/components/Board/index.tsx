@@ -7,7 +7,7 @@ export default function Board() {
     const grid = useView()
 
     const { tiles, pieces } = useAppSelector((state) => state.appearance)
-    const { board, turn } = useAppSelector((state) => state.board)
+    const { board, turn } = useAppSelector((state) => state.game)
 
     return (
         <div className="board">
