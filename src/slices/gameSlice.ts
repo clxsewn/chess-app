@@ -98,5 +98,5 @@ export const gameSlice = createSlice({
     },
 })
 
-export const { move, start } = gameSlice.actions
+export const { move, start, end } = gameSlice.actions
 export default gameSlice.reducer

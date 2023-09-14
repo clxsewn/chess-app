@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import appearanceReducer from './slices/appearanceSlice.ts'
-import gameReducer from './slices/boardSlice.ts'
+import gameReducer from './slices/gameSlice.ts'
 
 export const store = configureStore({
     reducer: {

@@ -1,6 +1,6 @@
 import { DragEvent } from 'react'
 import { useAppDispatch } from '../../hooks.ts'
-import { move } from '../../slices/boardSlice.ts'
+import { move } from '../../slices/gameSlice.ts'
 import './styles.scss'
 
 export default function Tile({
