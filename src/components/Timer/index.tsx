@@ -4,6 +4,7 @@ import { useTimer } from 'react-timer-hook'
 import { end } from '../../slices/gameSlice.ts'
 import { TColor } from '../../types/Board.ts'
 import { opposite } from '../../utils.ts'
+import './styles.scss'
 
 export default function Timer({
     duration,
@@ -14,6 +15,7 @@ export default function Timer({
 }) {
     const dispatch = useAppDispatch()
     const turn = useAppSelector((state) => state.game.turn)
+    const bg = useAppSelector((state) => state.appearance.tiles.colors.black)
 
     const [currTurn, setCurrTurn] = useState('none')
 
@@ -25,7 +27,7 @@ export default function Timer({
         autoStart: false,
         onExpire: () => {
             dispatch(end(opposite(forPlayer)))
-            console.log(opposite(forPlayer), ' wins!')
+            console.log(opposite(forPlayer), 'wins!')
         },
     })
 
@@ -42,7 +44,11 @@ export default function Timer({
     const minutePrefix = minutes < 10 ? '0' : ''
 
     return (
-        <div>
+        <div
+            className="timer"
+            style={{ backgroundColor: bg, color: forPlayer }}
+        >
+            <i className="pi pi-stopwatch"></i>
             {minutePrefix}
             {minutes}:{secondsPrefix}
             {seconds}
