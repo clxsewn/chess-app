@@ -1,10 +1,8 @@
 $board-border-radius: 6px;
 
 .tile {
-  width: 100px;
-  height: 100px;
-
   position: relative;
+  aspect-ratio: 1 / 1;
 
   .str-symbol, .col-symbol {
     position: absolute;
@@ -30,7 +28,12 @@ $board-border-radius: 6px;
   & .piece {
     width: 90%;
     height: 90%;
-    margin: 5% auto 0 auto;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;

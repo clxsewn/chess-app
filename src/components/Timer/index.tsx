@@ -45,7 +45,7 @@ export default function Timer({
 
     return (
         <div
-            className="timer"
+            className={`timer ${forPlayer}`}
             style={{ backgroundColor: bg, color: forPlayer }}
         >
             <i className="pi pi-stopwatch"></i>
