@@ -6,6 +6,8 @@ type TColorOrNone = TColor | 'none'
 
 interface Game {
     board: Board
+    selected: string
+    possibleMoves: string[]
     turn: TColorOrNone
     gameStarted: boolean
     winner: TColorOrNone
@@ -49,6 +51,8 @@ const initialState: Game = {
         g7: { piece: 'pawn', color: 'black' },
         h7: { piece: 'pawn', color: 'black' },
     },
+    selected: 'none',
+    possibleMoves: [],
     gameStarted: false,
     turn: 'none',
     winner: 'none',
@@ -58,6 +62,14 @@ export const gameSlice = createSlice({
     name: 'game',
     initialState: initialState,
     reducers: {
+        select: (state, action: PayloadAction<string>) => {
+            state.selected = action.payload
+            state.possibleMoves = getPossibleMoves(state.board, action.payload)
+        },
+        unselect: (state) => {
+            state.selected = 'none'
+            state.possibleMoves = []
+        },
         move: (state, action: PayloadAction<{ from: string; to: string }>) => {
             const { board, turn } = state
             const from = board[action.payload.from]
@@ -68,18 +80,9 @@ export const gameSlice = createSlice({
                 board[fromId].color === turn &&
                 state.gameStarted
             ) {
-                const possibleMoves = new Set(
-                    getPossibleMoves(board, fromId, toId).filter(
-                        (m) =>
-                            (!(m in state) || board[m].color !== from.color) &&
-                            m[0] >= 'a' &&
-                            m[0] <= 'h' &&
-                            m[1] >= '1' &&
-                            m[1] <= '8'
-                    )
-                )
+                const possibleMoves = getPossibleMoves(board, fromId)
 
-                if (possibleMoves.has(toId)) {
+                if (possibleMoves.includes(toId)) {
                     board[toId] = from
                     delete board[fromId]
 

@@ -1,6 +1,8 @@
 $board-border-radius: 6px;
 
 .tile {
+  min-width: 40px;
+
   position: relative;
   aspect-ratio: 1 / 1;
 
@@ -53,6 +55,14 @@ $board-border-radius: 6px;
 
   &:nth-child(64) {
     border-bottom-right-radius: $board-border-radius;
+  }
+
+  @media screen and (max-height: 750px) {
+    font-size: 0.8em;
+  }
+
+  @media screen and (max-height: 600px) {
+    font-size: 0.6em;
   }
 }
 

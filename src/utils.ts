@@ -56,30 +56,47 @@ export function correctTileId(id: string): boolean {
     return id[0] >= 'a' && id[0] <= 'h' && id[1] >= '1' && id[1] <= '8'
 }
 
-export function getPossibleMoves(board: Board, id: string, to: string) {
+export function getPossibleMoves(board: Board, id: string) {
+    return [
+        ...new Set(
+            _getPossibleMoves(board, id).filter(
+                (m) =>
+                    (!(m in board) || board[m].color !== board[id].color) &&
+                    m[0] >= 'a' &&
+                    m[0] <= 'h' &&
+                    m[1] >= '1' &&
+                    m[1] <= '8'
+            )
+        ),
+    ]
+}
+
+function _getPossibleMoves(board: Board, id: string) {
     const { piece, color } = board[id]
     const possibleMoves = []
 
-    const direction = color === 'white' ? 'up' : 'down'
+    const forward = color === 'white' ? 'up' : 'down'
     switch (piece) {
         case 'pawn':
-            if (!(to in board)) {
-                possibleMoves.push(mov(id, [direction]))
-                if (
-                    ((id[1] === '2' && color === 'white') ||
-                        (id[1] === '7' && color === 'black')) &&
-                    !(mov(id, [direction]) in board)
-                ) {
-                    possibleMoves.push(mov(id, [direction, direction]))
-                }
-            } else {
-                if (mov(id, [direction, 'left']) in board) {
-                    possibleMoves.push(mov(id, [direction, 'left']))
-                }
-                if (mov(id, [direction, 'right']) in board) {
-                    possibleMoves.push(mov(id, [direction, 'right']))
-                }
+            if (!(mov(id, [forward]) in board))
+                possibleMoves.push(mov(id, [forward]))
+
+            if (
+                ((id[1] === '2' && color === 'white') ||
+                    (id[1] === '7' && color === 'black')) &&
+                !(mov(id, [forward, forward]) in board)
+            ) {
+                possibleMoves.push(mov(id, [forward, forward]))
             }
+
+            if (board[mov(id, [forward, 'left'])]?.color === opposite(color)) {
+                possibleMoves.push(mov(id, [forward, 'left']))
+            }
+
+            if (board[mov(id, [forward, 'right'])]?.color === opposite(color)) {
+                possibleMoves.push(mov(id, [forward, 'right']))
+            }
+
             return possibleMoves
 
         case 'rook':

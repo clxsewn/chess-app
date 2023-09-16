@@ -20,10 +20,7 @@ export default function Aside() {
             <TabView>
                 <TabPanel header="Game">
                     <div className="tab-content">
-                        <Button
-                            label="Start game"
-                            onClick={startButtonHandler}
-                        />
+                        <Button label="New game" onClick={startButtonHandler} />
                     </div>
                 </TabPanel>
                 <TabPanel header="Settings" leftIcon="pi pi-cog">
