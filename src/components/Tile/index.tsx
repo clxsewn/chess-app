@@ -67,7 +67,9 @@ export default function Tile({
         >
             {id[0] === 'a' && <span className="str-symbol">{id[1]}</span>}
             {id[1] === '1' && <span className="col-symbol">{id[0]}</span>}
-            {possible && <div className="possible" />}
+            {possible && (
+                <div className={`possible ${piece ? 'capture' : ''}`} />
+            )}
             {piece && (
                 <img
                     src={piece}

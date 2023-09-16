@@ -1,5 +1,4 @@
 .board {
-  height: calc(100% - 100px);
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);

@@ -11,7 +11,7 @@ export default function Game() {
                 <Board />
                 <Timer duration={90} forPlayer={'white'} />
             </div>
-            <Aside />
+            {/*<Aside />*/}
         </div>
     )
 }

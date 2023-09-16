@@ -16,6 +16,13 @@ $board-border-radius: 6px;
 
     border-radius: 50%;
     background-color: #ddaf60;
+
+    &.capture {
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      height: 80%;
+    }
   }
 
   .str-symbol, .col-symbol {
