@@ -6,6 +6,18 @@ $board-border-radius: 6px;
   position: relative;
   aspect-ratio: 1 / 1;
 
+  .possible {
+    width: 20%;
+    height: 20%;
+
+    position: absolute;
+    top: 40%;
+    left: 40%;
+
+    border-radius: 50%;
+    background-color: #ddaf60;
+  }
+
   .str-symbol, .col-symbol {
     position: absolute;
     font-family: "Montserrat", sans-serif;

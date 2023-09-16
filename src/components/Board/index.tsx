@@ -7,7 +7,9 @@ export default function Board() {
     const grid = useView()
 
     const { tiles, pieces } = useAppSelector((state) => state.appearance)
-    const { board, turn } = useAppSelector((state) => state.game)
+    const { board, turn, selected, possibleMoves } = useAppSelector(
+        (state) => state.game
+    )
 
     return (
         <div className="board">
@@ -26,6 +28,8 @@ export default function Board() {
                             : undefined
                     }
                     movable={board[t]?.color === turn}
+                    selected={selected === t}
+                    possible={possibleMoves.includes(t)}
                 />
             ))}
         </div>

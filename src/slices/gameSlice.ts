@@ -72,8 +72,15 @@ export const gameSlice = createSlice({
         },
         move: (state, action: PayloadAction<{ from: string; to: string }>) => {
             const { board, turn } = state
-            const from = board[action.payload.from]
-            const { from: fromId, to: toId } = action.payload
+            const fromId =
+                action.payload.from === 'selected'
+                    ? state.selected
+                    : action.payload.from
+
+            if (fromId === 'none') return state
+
+            const from = board[fromId]
+            const toId = action.payload.to
 
             if (
                 fromId !== toId &&
@@ -88,6 +95,7 @@ export const gameSlice = createSlice({
 
                     state.turn = opposite(turn)
                 }
+                gameSlice.caseReducers.unselect(state)
             }
         },
         start: (state) => {
@@ -95,11 +103,12 @@ export const gameSlice = createSlice({
             state.gameStarted = true
         },
         end: (state, action: PayloadAction<TColor>) => {
+            gameSlice.caseReducers.unselect(state)
             state.turn = 'none'
             state.winner = action.payload
         },
     },
 })
 
-export const { move, start, end } = gameSlice.actions
+export const { select, unselect, move, start, end } = gameSlice.actions
 export default gameSlice.reducer
