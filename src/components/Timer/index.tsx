@@ -15,7 +15,7 @@ export default function Timer({
 }) {
     const dispatch = useAppDispatch()
     const turn = useAppSelector((state) => state.game.turn)
-    const bg = useAppSelector((state) => state.appearance.tiles.colors.black)
+    // const bg = useAppSelector((state) => state.appearance.tiles.colors.black)
 
     const [currTurn, setCurrTurn] = useState('none')
 
@@ -31,11 +31,14 @@ export default function Timer({
         },
     })
 
+    let animatedClass = ''
     if (currTurn !== turn) {
         if (turn === forPlayer) {
             resume()
+            if (seconds < 15) animatedClass = 'danger-time'
         } else {
             pause()
+            animatedClass = ''
         }
         setCurrTurn(turn)
     }
@@ -45,8 +48,8 @@ export default function Timer({
 
     return (
         <div
-            className={`timer ${forPlayer}`}
-            style={{ backgroundColor: bg, color: forPlayer }}
+            className={`timer ${forPlayer} ${animatedClass}`}
+            style={{ backgroundColor: forPlayer }}
         >
             <i className="pi pi-stopwatch"></i>
             {minutePrefix}

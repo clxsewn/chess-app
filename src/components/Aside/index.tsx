@@ -18,12 +18,12 @@ export default function Aside() {
     return (
         <aside>
             <TabView>
-                <TabPanel header="Game">
+                <TabPanel header="Game" leftIcon="pi pi-play mr">
                     <div className="tab-content">
                         <Button label="New game" onClick={startButtonHandler} />
                     </div>
                 </TabPanel>
-                <TabPanel header="Settings" leftIcon="pi pi-cog">
+                <TabPanel header="Settings" leftIcon="pi pi-cog mr">
                     <div className="tab-content">
                         <Dropdown
                             onChange={(e) => dispatch(setTilesTheme(e.value))}

@@ -1,9 +1,16 @@
 .timer {
-  padding: 4px 7px;
+  padding: 4px 7px 4px 34px;
+
   border-radius: 6px;
+  color: #999999;
+
+  font-family: "Montserrat", sans-serif;
   font-size: 22px;
+  font-weight: 600;
   letter-spacing: 1.2px;
+
   justify-self: start;
+  user-select: none;
 
   .pi {
     margin-right: 5px;

@@ -7,11 +7,11 @@ export default function Game() {
     return (
         <div className="game">
             <div className="board-wrapper">
-                <Timer duration={90} forPlayer={'black'} />
+                <Timer duration={20} forPlayer={'black'} />
                 <Board />
-                <Timer duration={90} forPlayer={'white'} />
+                <Timer duration={20} forPlayer={'white'} />
             </div>
-            {/*<Aside />*/}
+            <Aside key={'aside1'} />
         </div>
     )
 }

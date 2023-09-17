@@ -13,16 +13,23 @@ export default function Board() {
         (state) => state.game
     )
 
-    function boardResize() {
+    function _boardResize(asideWidth: number) {
         if (boardRef.current) {
-            if (window.innerWidth > window.innerHeight - 120) {
+            if (window.innerWidth - asideWidth > window.innerHeight - 120) {
                 boardRef.current.style.height = window.innerHeight - 140 + 'px'
                 boardRef.current.style.width = 'auto'
             } else {
                 boardRef.current.style.height = 'auto'
-                boardRef.current.style.width = window.innerWidth - 20 + 'px'
+                boardRef.current.style.width =
+                    window.innerWidth - 20 - asideWidth + 'px'
             }
         }
+    }
+
+    function boardResize() {
+        if (window.innerWidth < 980) {
+            _boardResize(0)
+        } else _boardResize(330)
     }
 
     useEffect(() => {
@@ -34,7 +41,7 @@ export default function Board() {
         return () => {
             window.removeEventListener('resize', boardResize)
         }
-    }, [boardRef])
+    })
 
     return (
         <div className="board" ref={boardRef}>

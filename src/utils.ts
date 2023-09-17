@@ -8,13 +8,17 @@ export type direction = 'up' | 'down' | 'left' | 'right'
 
 // the board is assumed to be positioned
 // so that the white pieces are at the bottom
-function mov(pos: string, moves: direction[]): string {
+export function mov(pos: string, moves: direction[]): string {
     return moves.reduce((curPos, mv) => {
         switch (mv) {
             case 'up':
-                return `${curPos[0]}${parseInt(curPos[1]) + 1}`
+                return `${curPos[0]}${String.fromCharCode(
+                    curPos.charCodeAt(1) + 1
+                )}`
             case 'down':
-                return `${curPos[0]}${parseInt(curPos[1]) - 1}`
+                return `${curPos[0]}${String.fromCharCode(
+                    curPos.charCodeAt(1) - 1
+                )}`
             case 'left':
                 return `${String.fromCharCode(curPos.charCodeAt(0) - 1)}${
                     curPos[1]

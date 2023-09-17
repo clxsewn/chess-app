@@ -8,3 +8,13 @@ aside {
 .tab-content {
   width: 280px;
 }
+
+.mr {
+  margin-right: 6px;
+}
+
+@media screen and (max-width: 979px) {
+  .game aside {
+    display: none;
+  }
+}

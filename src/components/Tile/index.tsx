@@ -40,7 +40,6 @@ export default function Tile({
 
     function dropHandler(e: DragEvent, id: string) {
         e.preventDefault()
-        console.log(`${e.dataTransfer.getData('startId')} > ${id}`)
         dispatch(move({ from: e.dataTransfer.getData('startId'), to: id }))
     }
 
@@ -56,7 +55,7 @@ export default function Tile({
         <div
             className={`tile`}
             style={{
-                backgroundColor: selected ? '#ddaf60' : colors[0],
+                backgroundColor: selected ? '#ffc471' : colors[0],
                 color: colors[1],
             }}
             onClick={() => onClickHandler(id)}
@@ -68,7 +67,12 @@ export default function Tile({
             {id[0] === 'a' && <span className="str-symbol">{id[1]}</span>}
             {id[1] === '1' && <span className="col-symbol">{id[0]}</span>}
             {possible && (
-                <div className={`possible ${piece ? 'capture' : ''}`} />
+                <div className={`possible ${piece ? 'capture' : ''}`}>
+                    <div
+                        className="inner"
+                        style={{ backgroundColor: colors[0] }}
+                    />
+                </div>
             )}
             {piece && (
                 <img
