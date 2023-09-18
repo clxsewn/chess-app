@@ -82,15 +82,15 @@ function _getPossibleMoves(board: Board, id: string) {
     const forward = color === 'white' ? 'up' : 'down'
     switch (piece) {
         case 'pawn':
-            if (!(mov(id, [forward]) in board))
+            if (!(mov(id, [forward]) in board)) {
                 possibleMoves.push(mov(id, [forward]))
-
-            if (
-                ((id[1] === '2' && color === 'white') ||
-                    (id[1] === '7' && color === 'black')) &&
-                !(mov(id, [forward, forward]) in board)
-            ) {
-                possibleMoves.push(mov(id, [forward, forward]))
+                if (
+                    ((id[1] === '2' && color === 'white') ||
+                        (id[1] === '7' && color === 'black')) &&
+                    !(mov(id, [forward, forward]) in board)
+                ) {
+                    possibleMoves.push(mov(id, [forward, forward]))
+                }
             }
 
             if (board[mov(id, [forward, 'left'])]?.color === opposite(color)) {

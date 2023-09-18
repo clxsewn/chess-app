@@ -16,7 +16,7 @@ function App() {
                 onClick={() => setSbVisible(true)}
             />
             <Sidebar visible={sbVisible} onHide={() => setSbVisible(false)}>
-                <Aside key={'aside1'} />
+                <Aside />
             </Sidebar>
         </>
     )

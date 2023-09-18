@@ -11,7 +11,7 @@ export default function Game() {
                 <Board />
                 <Timer duration={20} forPlayer={'white'} />
             </div>
-            <Aside key={'aside1'} />
+            <Aside />
         </div>
     )
 }
