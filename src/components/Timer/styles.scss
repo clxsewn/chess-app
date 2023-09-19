@@ -1,5 +1,11 @@
 .timer {
-  padding: 4px 7px 4px 34px;
+  padding: 4px 7px 4px 50px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 150px;
 
   border-radius: 6px;
   color: #999999;
@@ -14,6 +20,17 @@
 
   .pi {
     margin-right: 5px;
+  }
+
+  .time {
+    .digit {
+      display: inline-block;
+      width: 16px;
+    }
+
+    .colon {
+      width: 10px;
+    }
   }
 
   &.white {

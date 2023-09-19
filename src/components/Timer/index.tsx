@@ -15,7 +15,6 @@ export default function Timer({
 }) {
     const dispatch = useAppDispatch()
     const turn = useAppSelector((state) => state.game.turn)
-    // const bg = useAppSelector((state) => state.appearance.tiles.colors.black)
 
     const [currTurn, setCurrTurn] = useState('none')
 
@@ -43,18 +42,19 @@ export default function Timer({
         setCurrTurn(turn)
     }
 
-    const secondsPrefix = seconds < 10 ? '0' : ''
-    const minutePrefix = minutes < 10 ? '0' : ''
-
     return (
         <div
             className={`timer ${forPlayer} ${animatedClass}`}
             style={{ backgroundColor: forPlayer }}
         >
             <i className="pi pi-stopwatch"></i>
-            {minutePrefix}
-            {minutes}:{secondsPrefix}
-            {seconds}
+            <span className="time">
+                <span className="digit">{Math.floor(minutes / 10)}</span>
+                <span className="digit">{minutes % 10}</span>
+                <span className="colon">:</span>
+                <span className="digit">{Math.floor(seconds / 10)}</span>
+                <span className="digit">{seconds % 10}</span>
+            </span>
         </div>
     )
 }
