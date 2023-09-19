@@ -6,6 +6,8 @@ $board-border-radius: 6px;
   position: relative;
   aspect-ratio: 1 / 1;
 
+  user-select: none;
+
   .possible {
     width: 20%;
     height: 20%;
@@ -66,8 +68,6 @@ $board-border-radius: 6px;
     transform: translate(-50%, -50%);
 
     user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
   }
 
   &:first-child {

@@ -82,18 +82,43 @@ export const gameSlice = createSlice({
             const from = board[fromId]
             const toId = action.payload.to
 
+            const boardCopy = { ...state.board }
+
             if (
                 fromId !== toId &&
                 board[fromId].color === turn &&
                 state.gameStarted
             ) {
-                const possibleMoves = getPossibleMoves(board, fromId)
+                const possibleMoves = getPossibleMoves(boardCopy, fromId)
 
                 if (possibleMoves.includes(toId)) {
-                    board[toId] = from
-                    delete board[fromId]
+                    boardCopy[toId] = from
+                    delete boardCopy[fromId]
 
-                    state.turn = opposite(turn)
+                    let allyKingPos = ''
+                    for (const [key, value] of Object.entries(boardCopy)) {
+                        if (value.piece === 'king' && value.color === turn) {
+                            allyKingPos = key
+                            break
+                        }
+                    }
+
+                    const allOppositePieces = Object.entries(boardCopy)
+                        .filter(([, value]) => {
+                            return value.color !== turn
+                        })
+                        .map(([key]) => key)
+
+                    const checkFlag = allOppositePieces.some((el) => {
+                        return getPossibleMoves(boardCopy, el).includes(
+                            allyKingPos
+                        )
+                    })
+
+                    if (!checkFlag) {
+                        state.board = boardCopy
+                        state.turn = opposite(turn)
+                    }
                 }
                 gameSlice.caseReducers.unselect(state)
             }

@@ -5,8 +5,6 @@
   justify-content: space-between;
   align-items: center;
 
-  width: 150px;
-
   border-radius: 6px;
   color: #999999;
 
@@ -23,13 +21,16 @@
   }
 
   .time {
+    text-align: center;
+
     .digit {
       display: inline-block;
-      width: 16px;
+      width: 14px;
     }
 
     .colon {
-      width: 10px;
+      display: inline-block;
+      margin-left: 2px;
     }
   }
 
