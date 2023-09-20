@@ -66,10 +66,12 @@ export const gameSlice = createSlice({
             state.selected = action.payload
             state.possibleMoves = getPossibleMoves(state.board, action.payload)
         },
+
         unselect: (state) => {
             state.selected = 'none'
             state.possibleMoves = []
         },
+
         move: (state, action: PayloadAction<{ from: string; to: string }>) => {
             const { board, turn } = state
             const fromId =
@@ -123,14 +125,16 @@ export const gameSlice = createSlice({
                 gameSlice.caseReducers.unselect(state)
             }
         },
+
         start: (state) => {
             state.turn = 'white'
             state.gameStarted = true
         },
-        end: (state, action: PayloadAction<TColor>) => {
+
+        end: (state, action: PayloadAction<{ winner: TColor }>) => {
             gameSlice.caseReducers.unselect(state)
             state.turn = 'none'
-            state.winner = action.payload
+            state.winner = action.payload.winner
         },
     },
 })

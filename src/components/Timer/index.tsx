@@ -25,7 +25,7 @@ export default function Timer({
         expiryTimestamp: time,
         autoStart: false,
         onExpire: () => {
-            dispatch(end(opposite(forPlayer)))
+            dispatch(end({ winner: opposite(forPlayer) }))
             console.log(opposite(forPlayer), 'wins!')
         },
     })
