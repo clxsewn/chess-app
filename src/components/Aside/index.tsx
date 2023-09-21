@@ -1,11 +1,11 @@
 import { TabPanel, TabView } from 'primereact/tabview'
 import './styles.scss'
 import { Dropdown } from 'primereact/dropdown'
-import { setTilesTheme } from '../../slices/appearanceSlice.ts'
+import { setTilesTheme } from '../../store/reducers/appearanceSlice.ts'
 import tilesThemes from '../../boardThemes.ts'
 import { useAppDispatch, useAppSelector } from '../../hooks.ts'
 import { Button } from 'primereact/button'
-import { start } from '../../slices/gameSlice.ts'
+import { start } from '../../store/reducers/gameSlice.ts'
 
 export default function Aside() {
     const selected = useAppSelector((state) => state.appearance.tiles)

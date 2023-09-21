@@ -1,4 +1,4 @@
-import { Board, TColor } from './types/Board.ts'
+import { Board, TColor, TileID } from './types/Board.ts'
 
 export function isBlackTile(id: string): boolean {
     return (id.charCodeAt(0) + parseInt(id[1])) % 2 === 0
@@ -8,7 +8,7 @@ export type direction = 'up' | 'down' | 'left' | 'right'
 
 // the board is assumed to be positioned
 // so that the white pieces are at the bottom
-export function mov(pos: string, moves: direction[]): string {
+export function mov(pos: TileID, moves: direction[]): TileID {
     return moves.reduce((curPos, mv) => {
         switch (mv) {
             case 'up':
@@ -31,7 +31,7 @@ export function mov(pos: string, moves: direction[]): string {
     }, pos)
 }
 
-function repeat(pos: string, direction: direction[], state: Board): string[] {
+function repeat(pos: TileID, direction: direction[], state: Board): string[] {
     const returnArr: string[] = []
     let currentPos = pos
 
@@ -60,7 +60,7 @@ export function correctTileId(id: string): boolean {
     return id[0] >= 'a' && id[0] <= 'h' && id[1] >= '1' && id[1] <= '8'
 }
 
-export function getPossibleMoves(board: Board, id: string) {
+export function getPossibleMoves(board: Board, id: TileID) {
     return [
         ...new Set(
             _getPossibleMoves(board, id).filter(
@@ -75,7 +75,7 @@ export function getPossibleMoves(board: Board, id: string) {
     ]
 }
 
-function _getPossibleMoves(board: Board, id: string) {
+function _getPossibleMoves(board: Board, id: TileID) {
     const { piece, color } = board[id]
     const possibleMoves = []
 

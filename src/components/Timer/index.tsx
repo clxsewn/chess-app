@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks.ts'
 import { useState } from 'react'
 import { useTimer } from 'react-timer-hook'
-import { end } from '../../slices/gameSlice.ts'
+import { end } from '../../store/reducers/gameSlice.ts'
 import { TColor } from '../../types/Board.ts'
 import { opposite } from '../../utils.ts'
 import './styles.scss'

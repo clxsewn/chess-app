@@ -1,6 +1,6 @@
 import { DragEvent } from 'react'
 import { useAppDispatch } from '../../hooks.ts'
-import { move, select, unselect } from '../../slices/gameSlice.ts'
+import { move, select, unselect } from '../../store/reducers/gameSlice.ts'
 import './styles.scss'
 
 export default function Tile({
