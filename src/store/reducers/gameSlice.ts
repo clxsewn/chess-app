@@ -2,15 +2,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board, TColor, TileID } from '../../types/Board.ts'
 import { getPossibleMoves, opposite } from '../../utils.ts'
 
-type TColorOrNone = TColor | 'none'
+type TColorOrNull = TColor | null
 
 interface Game {
     board: Board
-    selected: string
+    selected: TileID | null
     possibleMoves: string[]
-    turn: TColorOrNone
+    turn: TColorOrNull
     gameStarted: boolean
-    winner: TColorOrNone
+    winner: TColorOrNull
 }
 
 const initialState: Game = {
@@ -51,11 +51,11 @@ const initialState: Game = {
         g7: { piece: 'pawn', color: 'black' },
         h7: { piece: 'pawn', color: 'black' },
     },
-    selected: 'none',
+    selected: null,
     possibleMoves: [],
     gameStarted: false,
-    turn: 'none',
-    winner: 'none',
+    turn: null,
+    winner: null,
 }
 
 export const gameSlice = createSlice({
@@ -68,13 +68,13 @@ export const gameSlice = createSlice({
         },
 
         unselect: (state) => {
-            state.selected = 'none'
+            state.selected = null
             state.possibleMoves = []
         },
 
         move: (
             state,
-            action: PayloadAction<{ from: string | 'selected'; to: string }>
+            action: PayloadAction<{ from: TileID | 'selected'; to: TileID }>
         ) => {
             const { board, turn } = state
             const fromId =
@@ -82,7 +82,7 @@ export const gameSlice = createSlice({
                     ? state.selected
                     : action.payload.from
 
-            if (fromId === 'none') return state
+            if (fromId === null) return state
 
             const from = board[fromId]
             const toId = action.payload.to
@@ -136,7 +136,7 @@ export const gameSlice = createSlice({
 
         end: (state, action: PayloadAction<{ winner: TColor }>) => {
             gameSlice.caseReducers.unselect(state)
-            state.turn = 'none'
+            state.turn = null
             state.winner = action.payload.winner
         },
     },

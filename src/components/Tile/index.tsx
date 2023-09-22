@@ -2,6 +2,7 @@ import { DragEvent } from 'react'
 import { useAppDispatch } from '../../hooks.ts'
 import { move, select, unselect } from '../../store/reducers/gameSlice.ts'
 import './styles.scss'
+import { TileID } from '../../types/Board.ts'
 
 export default function Tile({
     id,
@@ -11,7 +12,7 @@ export default function Tile({
     selected,
     possible,
 }: {
-    id: string
+    id: TileID
     colors: [string, string]
     piece?: string
     movable: boolean
@@ -20,7 +21,7 @@ export default function Tile({
 }) {
     const dispatch = useAppDispatch()
 
-    function dragStartHandler(e: DragEvent, id: string) {
+    function dragStartHandler(e: DragEvent, id: TileID) {
         dispatch(unselect())
         e.dataTransfer.clearData()
         e.dataTransfer.setData('startId', id)
@@ -38,12 +39,12 @@ export default function Tile({
         e.preventDefault()
     }
 
-    function dropHandler(e: DragEvent, id: string) {
+    function dropHandler(e: DragEvent, id: TileID) {
         e.preventDefault()
         dispatch(move({ from: e.dataTransfer.getData('startId'), to: id }))
     }
 
-    function onClickHandler(id: string) {
+    function onClickHandler(id: TileID) {
         if (possible) {
             dispatch(move({ from: 'selected', to: id }))
         } else if (!movable) {

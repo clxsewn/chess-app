@@ -1,11 +1,15 @@
 import { TabPanel, TabView } from 'primereact/tabview'
 import './styles.scss'
 import { Dropdown } from 'primereact/dropdown'
-import { setTilesTheme } from '../../store/reducers/appearanceSlice.ts'
+import {
+    setTilesTheme,
+    toggleBoardView,
+} from '../../store/reducers/appearanceSlice.ts'
 import tilesThemes from '../../boardThemes.ts'
 import { useAppDispatch, useAppSelector } from '../../hooks.ts'
 import { Button } from 'primereact/button'
 import { start } from '../../store/reducers/gameSlice.ts'
+import { Divider } from 'primereact/divider'
 
 export default function Aside() {
     const selected = useAppSelector((state) => state.appearance.tiles)
@@ -30,6 +34,12 @@ export default function Aside() {
                             options={tilesThemes}
                             optionLabel="name"
                             value={selected}
+                        />
+                        <Divider />
+                        <Button
+                            label="Toggle view"
+                            icon="pi pi-arrows-v"
+                            onClick={() => dispatch(toggleBoardView())}
                         />
                     </div>
                 </TabPanel>

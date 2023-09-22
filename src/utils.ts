@@ -8,7 +8,7 @@ export type direction = 'up' | 'down' | 'left' | 'right'
 
 // the board is assumed to be positioned
 // so that the white pieces are at the bottom
-export function mov(pos: TileID, moves: direction[]): TileID {
+export function mov(pos: TileID, moves: direction[]): string {
     return moves.reduce((curPos, mv) => {
         switch (mv) {
             case 'up':
@@ -60,7 +60,7 @@ export function correctTileId(id: string): boolean {
     return id[0] >= 'a' && id[0] <= 'h' && id[1] >= '1' && id[1] <= '8'
 }
 
-export function getPossibleMoves(board: Board, id: TileID) {
+export function getPossibleMoves(board: Board, id: TileID): TileID[] {
     return [
         ...new Set(
             _getPossibleMoves(board, id).filter(
@@ -75,7 +75,7 @@ export function getPossibleMoves(board: Board, id: TileID) {
     ]
 }
 
-function _getPossibleMoves(board: Board, id: TileID) {
+function _getPossibleMoves(board: Board, id: TileID): TileID[] {
     const { piece, color } = board[id]
     const possibleMoves = []
 
