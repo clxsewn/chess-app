@@ -41,7 +41,9 @@ export default function Tile({
 
     function dropHandler(e: DragEvent, id: TileID) {
         e.preventDefault()
-        dispatch(move({ from: e.dataTransfer.getData('startId'), to: id }))
+        dispatch(
+            move({ from: e.dataTransfer.getData('startId') as TileID, to: id })
+        )
     }
 
     function onClickHandler(id: TileID) {

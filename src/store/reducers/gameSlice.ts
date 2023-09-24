@@ -91,7 +91,7 @@ export const gameSlice = createSlice({
 
             if (
                 fromId !== toId &&
-                board[fromId].color === turn &&
+                board[fromId]?.color === turn &&
                 state.gameStarted
             ) {
                 const possibleMoves = getPossibleMoves(boardCopy, fromId)
@@ -100,10 +100,10 @@ export const gameSlice = createSlice({
                     boardCopy[toId] = from
                     delete boardCopy[fromId]
 
-                    let allyKingPos = ''
+                    let allyKingPos: TileID = 'a1'
                     for (const [key, value] of Object.entries(boardCopy)) {
                         if (value.piece === 'king' && value.color === turn) {
-                            allyKingPos = key
+                            allyKingPos = key as TileID
                             break
                         }
                     }
@@ -112,7 +112,7 @@ export const gameSlice = createSlice({
                         .filter(([, value]) => {
                             return value.color !== turn
                         })
-                        .map(([key]) => key)
+                        .map(([key]) => key) as TileID[]
 
                     const checkFlag = allOppositePieces.some((el) => {
                         return getPossibleMoves(boardCopy, el).includes(

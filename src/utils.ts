@@ -8,8 +8,8 @@ export type direction = 'up' | 'down' | 'left' | 'right'
 
 // the board is assumed to be positioned
 // so that the white pieces are at the bottom
-export function mov(pos: TileID, moves: direction[]): string {
-    return moves.reduce((curPos, mv) => {
+export function mov(pos: TileID, moves: direction[]): TileID {
+    const resultPos = moves.reduce((curPos: string, mv) => {
         switch (mv) {
             case 'up':
                 return `${curPos[0]}${String.fromCharCode(
@@ -29,20 +29,22 @@ export function mov(pos: TileID, moves: direction[]): string {
                 }`
         }
     }, pos)
+
+    return correctTileId(resultPos) ? (resultPos as TileID) : pos
 }
 
-function repeat(pos: TileID, direction: direction[], state: Board): string[] {
-    const returnArr: string[] = []
+function repeat(pos: TileID, direction: direction[], board: Board): TileID[] {
+    const returnArr: TileID[] = []
     let currentPos = pos
 
-    const color = state[pos].color
+    const color = board[pos]?.color
 
     for (let i = 0; i < 8; i++) {
         currentPos = mov(currentPos, direction)
         if (correctTileId(currentPos)) {
-            if (!(currentPos in state)) {
+            if (!(currentPos in board)) {
                 returnArr.push(currentPos)
-            } else if (state[currentPos].color !== color) {
+            } else if (board[currentPos]?.color !== color) {
                 returnArr.push(currentPos)
                 return returnArr
             } else return returnArr
@@ -64,20 +66,15 @@ export function getPossibleMoves(board: Board, id: TileID): TileID[] {
     return [
         ...new Set(
             _getPossibleMoves(board, id).filter(
-                (m) =>
-                    (!(m in board) || board[m].color !== board[id].color) &&
-                    m[0] >= 'a' &&
-                    m[0] <= 'h' &&
-                    m[1] >= '1' &&
-                    m[1] <= '8'
+                (m) => !(m in board) || board[m]?.color !== board[id]?.color
             )
         ),
     ]
 }
 
 function _getPossibleMoves(board: Board, id: TileID): TileID[] {
-    const { piece, color } = board[id]
-    const possibleMoves = []
+    const { piece, color } = board[id]!
+    const possibleMoves: TileID[] = []
 
     const forward = color === 'white' ? 'up' : 'down'
     switch (piece) {
