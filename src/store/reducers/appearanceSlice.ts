@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { defaultBoardTheme } from '../../boardThemes.ts'
-import { defaultPiecesTheme, piecesThemes } from '../../piecesThemes.ts'
+import { defaultBoardTheme } from '../../data/boardThemes.ts'
+import { defaultPiecesTheme, piecesThemes } from '../../data/piecesThemes.ts'
 import { defaultBoard, reversedBoard } from '../../data/board.ts'
 import { TileID } from '../../types/Board.ts'
 

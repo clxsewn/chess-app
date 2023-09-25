@@ -5,7 +5,7 @@ import {
     setTilesTheme,
     toggleBoardView,
 } from '../../store/reducers/appearanceSlice.ts'
-import tilesThemes from '../../boardThemes.ts'
+import tilesThemes from '../../data/boardThemes.ts'
 import { useAppDispatch, useAppSelector } from '../../hooks.ts'
 import { Button } from 'primereact/button'
 import { start } from '../../store/reducers/gameSlice.ts'

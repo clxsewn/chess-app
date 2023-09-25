@@ -1,7 +1,8 @@
-import { IPieces, IPiecesTheme } from '../piecesThemes.ts'
+import { IPieces } from '../data/piecesThemes.ts'
+import { Colors } from './Theme.ts'
 
 export type TPiece = keyof IPieces
-export type TColor = keyof IPiecesTheme
+export type TColor = keyof Colors<never>
 
 export interface TTile {
     piece: TPiece

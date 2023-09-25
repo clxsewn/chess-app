@@ -55,12 +55,12 @@ export default function Board() {
                     id={t}
                     colors={
                         isBlackTile(t)
-                            ? [tiles.colors.black, tiles.colors.white]
-                            : [tiles.colors.white, tiles.colors.black]
+                            ? [tiles.theme.black, tiles.theme.white]
+                            : [tiles.theme.white, tiles.theme.black]
                     }
                     piece={
-                        board[t]
-                            ? pieces[board[t].color][board[t].piece]
+                        t in board
+                            ? pieces.theme[board[t].color][board[t].piece]
                             : undefined
                     }
                     movable={board[t]?.color === turn}
