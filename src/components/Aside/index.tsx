@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks.ts'
 import { Button } from 'primereact/button'
 import { start } from '../../store/reducers/gameSlice.ts'
 import { Divider } from 'primereact/divider'
+import History from '../History'
 
 export default function Aside() {
     const selected = useAppSelector((state) => state.appearance.tiles)
@@ -42,6 +43,9 @@ export default function Aside() {
                             onClick={() => dispatch(toggleBoardView())}
                         />
                     </div>
+                </TabPanel>
+                <TabPanel header="History" leftIcon="pi pi-clock mr">
+                    <History />
                 </TabPanel>
             </TabView>
         </aside>

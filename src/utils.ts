@@ -153,3 +153,11 @@ function _getPossibleMoves(board: Board, id: TileID): TileID[] {
             ]
     }
 }
+
+export const pieceNotation = {
+    rook: 'R',
+    knight: 'N',
+    bishop: 'B',
+    queen: 'Q',
+    king: 'K',
+}

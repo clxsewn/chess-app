@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board, TColor, TileID } from '../../types/Board.ts'
-import { getPossibleMoves, opposite } from '../../utils.ts'
+import { getPossibleMoves, opposite, pieceNotation } from '../../utils.ts'
 
 type TColorOrNull = TColor | null
 
 interface Game {
     board: Board
+    movesHistory: string[]
     selected: TileID | null
     possibleMoves: string[]
     turn: TColorOrNull
@@ -51,6 +52,7 @@ const initialState: Game = {
         g7: { piece: 'pawn', color: 'black' },
         h7: { piece: 'pawn', color: 'black' },
     },
+    movesHistory: [],
     selected: null,
     possibleMoves: [],
     gameStarted: false,
@@ -90,8 +92,9 @@ export const gameSlice = createSlice({
             const boardCopy = { ...state.board }
 
             if (
+                from &&
                 fromId !== toId &&
-                board[fromId]?.color === turn &&
+                from?.color === turn &&
                 state.gameStarted
             ) {
                 const possibleMoves = getPossibleMoves(boardCopy, fromId)
@@ -121,6 +124,14 @@ export const gameSlice = createSlice({
                     })
 
                     if (!checkFlag) {
+                        // Move notation
+                        let notation: string = toId
+                        if (from?.piece !== 'pawn')
+                            notation = pieceNotation[from.piece] + notation
+
+                        if (toId in board) notation = notation + 'x'
+
+                        state.movesHistory.push(notation)
                         state.board = boardCopy
                         state.turn = opposite(turn)
                     }
