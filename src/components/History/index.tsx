@@ -1,13 +1,13 @@
 import { useAppSelector } from '../../hooks.ts'
+import './styles.scss'
 
 export default function History() {
     const history = useAppSelector((state) => state.game.movesHistory)
-    console.log(history)
 
     return (
-        <div>
+        <div className="history">
             {history.map((h) => (
-                <div>{h}</div>
+                <div className="history-item">{h}</div>
             ))}
         </div>
     )

@@ -1,0 +1,23 @@
+.history {
+  width: fit-content;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.history-item {
+  width: 50px;
+  border-radius: 4px;
+  text-align: center;
+
+  &:nth-child(odd) {
+    background-color: #fff;
+    color: #000;
+  }
+
+  &:nth-child(even) {
+    background-color: #000;
+    color: #fff;
+  }
+}

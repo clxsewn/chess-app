@@ -147,7 +147,11 @@ export const gameSlice = createSlice({
 
         end: (state, action: PayloadAction<{ winner: TColor }>) => {
             gameSlice.caseReducers.unselect(state)
+
             state.turn = null
+            state.movesHistory.push(
+                action.payload.winner === 'white' ? '1-0' : '0-1'
+            )
             state.winner = action.payload.winner
         },
     },
