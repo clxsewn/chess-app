@@ -154,6 +154,24 @@ function _getPossibleMoves(board: Board, id: TileID): TileID[] {
     }
 }
 
+export function isCheck(color: TColor, board: Board) {
+    const allOppositePieces = Object.entries(board)
+        .filter(([, value]) => {
+            return value.color !== color
+        })
+        .map(([key]) => key) as TileID[]
+
+    for (const [key, value] of Object.entries(board)) {
+        if (value.piece === 'king' && value.color === color) {
+            return allOppositePieces.some((op) => {
+                return getPossibleMoves(board, op).includes(key as TileID)
+            })
+        }
+    }
+
+    return false
+}
+
 export const pieceNotation = {
     rook: 'R',
     knight: 'N',
