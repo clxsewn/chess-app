@@ -2,20 +2,23 @@ import { createSlice } from '@reduxjs/toolkit'
 import { defaultBoardTheme } from '../../data/boardThemes.ts'
 import { defaultPiecesTheme, piecesThemes } from '../../data/piecesThemes.ts'
 import { defaultBoard, reversedBoard } from '../../data/board.ts'
-import { TileID } from '../../types/Board.ts'
+import { TColor, TileID } from '../../types/Board.ts'
 
 interface BoardView {
     name: 'Default' | 'Reversed'
+    bottomColor: TColor
     view: TileID[]
 }
 
 const possibleViews: BoardView[] = [
     {
         name: 'Default',
+        bottomColor: 'white',
         view: defaultBoard,
     },
     {
         name: 'Reversed',
+        bottomColor: 'black',
         view: reversedBoard,
     },
 ]
