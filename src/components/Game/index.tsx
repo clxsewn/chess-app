@@ -6,9 +6,8 @@ import { useAppSelector } from '../../hooks.ts'
 import { opposite } from '../../utils.ts'
 
 export default function Game() {
-    const bottomColor = useAppSelector(
-        (state) => state.appearance.boardView.bottomColor
-    )
+    const viewName = useAppSelector((state) => state.appearance.boardView.name)
+    const bottomColor = viewName === 'Default' ? 'white' : 'black'
 
     return (
         <div className="game">

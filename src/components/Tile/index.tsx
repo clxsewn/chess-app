@@ -11,6 +11,7 @@ export default function Tile({
     movable,
     selected,
     possible,
+    drawColumnLabel,
 }: {
     id: TileID
     colors: [string, string]
@@ -18,6 +19,7 @@ export default function Tile({
     movable: boolean
     selected: boolean
     possible: boolean
+    drawColumnLabel: boolean
 }) {
     const dispatch = useAppDispatch()
 
@@ -68,7 +70,7 @@ export default function Tile({
             onDrop={(e) => dropHandler(e, id)}
         >
             {id[0] === 'a' && <span className="str-symbol">{id[1]}</span>}
-            {id[1] === '1' && <span className="col-symbol">{id[0]}</span>}
+            {drawColumnLabel && <span className="col-symbol">{id[0]}</span>}
             {possible && (
                 <div className={`possible ${piece ? 'capture' : ''}`}>
                     <div

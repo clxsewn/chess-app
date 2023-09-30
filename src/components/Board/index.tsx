@@ -11,7 +11,7 @@ export default function Board() {
         (state) => state.appearance
     )
 
-    const boardv = boardView.view
+    const { view } = boardView
 
     const { board, turn, selected, possibleMoves } = useAppSelector(
         (state) => state.game
@@ -49,7 +49,7 @@ export default function Board() {
 
     return (
         <div className="board" ref={boardRef}>
-            {boardv.map((t) => (
+            {view.map((t, vID) => (
                 <Tile
                     key={t}
                     id={t}
@@ -66,6 +66,7 @@ export default function Board() {
                     movable={board[t]?.color === turn}
                     selected={selected === t}
                     possible={possibleMoves.includes(t)}
+                    drawColumnLabel={vID > 55}
                 />
             ))}
         </div>
