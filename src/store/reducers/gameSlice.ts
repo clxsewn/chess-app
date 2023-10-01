@@ -11,6 +11,7 @@ type TColorOrNull = TColor | null
 
 interface Game {
     board: Board
+    id: number
     movesHistory: string[]
     selected: TileID | null
     possibleMoves: string[]
@@ -57,6 +58,7 @@ const initialState: Game = {
         g7: { piece: 'pawn', color: 'black' },
         h7: { piece: 'pawn', color: 'black' },
     },
+    id: -1,
     movesHistory: [],
     selected: null,
     possibleMoves: [],
@@ -126,8 +128,12 @@ export const gameSlice = createSlice({
         },
 
         start: (state) => {
-            state.turn = 'white'
-            state.gameStarted = true
+            return {
+                ...initialState,
+                turn: 'white',
+                gameStarted: true,
+                id: state.id + 1,
+            }
         },
 
         end: (state, action: PayloadAction<{ winner: TColor }>) => {
