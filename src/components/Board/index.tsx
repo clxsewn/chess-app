@@ -3,9 +3,11 @@ import './styles.scss'
 import { isBlackTile } from '../../utils.ts'
 import { useAppSelector } from '../../hooks.ts'
 import { useEffect, useRef } from 'react'
+import { Toast } from 'primereact/toast'
 
 export default function Board() {
     const boardRef = useRef<HTMLDivElement | null>(null)
+    const toastCenter = useRef<Toast>(null)
 
     const { tiles, pieces, boardView } = useAppSelector(
         (state) => state.appearance
@@ -13,9 +15,20 @@ export default function Board() {
 
     const { view } = boardView
 
-    const { board, turn, selected, possibleMoves } = useAppSelector(
+    const { board, turn, selected, possibleMoves, winner } = useAppSelector(
         (state) => state.game
     )
+
+    useEffect(() => {
+        if (winner && toastCenter.current) {
+            toastCenter.current.show({
+                severity: 'info',
+                summary: 'Game result',
+                detail: `${winner} wins!`,
+                life: 5000,
+            })
+        }
+    }, [winner])
 
     function _boardResize(asideWidth: number) {
         if (boardRef.current) {
@@ -60,7 +73,7 @@ export default function Board() {
                     }
                     piece={
                         t in board
-                            ? pieces.theme[board[t].color][board[t].piece]
+                            ? pieces.theme[board[t]!.color][board[t]!.piece]
                             : undefined
                     }
                     movable={board[t]?.color === turn}
@@ -69,6 +82,8 @@ export default function Board() {
                     drawColumnLabel={vID > 55}
                 />
             ))}
+
+            <Toast ref={toastCenter} position="center" />
         </div>
     )
 }

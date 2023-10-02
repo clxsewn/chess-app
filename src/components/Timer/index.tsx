@@ -16,7 +16,7 @@ export default function Timer({
     const dispatch = useAppDispatch()
     const turn = useAppSelector((state) => state.game.turn)
 
-    const [currTurn, setCurrTurn] = useState('none')
+    const [currTurn, setCurrTurn] = useState<TColor | null>(null)
 
     const time = new Date()
     time.setSeconds(time.getSeconds() + duration)
