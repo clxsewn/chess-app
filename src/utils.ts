@@ -172,7 +172,23 @@ export function isCheck(color: TColor, board: Board) {
     return false
 }
 
-export const pieceNotation = {
+export function getMoveNotation(
+    board: Board,
+    fromID: TileID,
+    toID: TileID
+): string {
+    let notation: string = toID
+
+    const from = board[fromID]
+    if (!from) return notation
+
+    if (from.piece !== 'pawn') notation = pieceNotation[from.piece] + notation
+    if (toID in board) notation = notation + 'x'
+
+    return notation
+}
+
+const pieceNotation = {
     rook: 'R',
     knight: 'N',
     bishop: 'B',

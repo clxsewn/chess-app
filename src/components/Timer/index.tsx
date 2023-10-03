@@ -26,7 +26,6 @@ export default function Timer({
         autoStart: false,
         onExpire: () => {
             dispatch(end({ winner: opposite(forPlayer) }))
-            console.log(opposite(forPlayer), 'wins!')
         },
     })
 

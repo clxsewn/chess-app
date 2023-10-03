@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board, TColor, TileID } from '../../types/Board.ts'
 import {
+    getMoveNotation,
     getPossibleMoves,
     isCheck,
     opposite,
-    pieceNotation,
 } from '../../utils.ts'
 
 type TColorOrNull = TColor | null
@@ -107,17 +107,12 @@ export const gameSlice = createSlice({
                 const possibleMoves = getPossibleMoves(boardCopy, fromId)
 
                 if (possibleMoves.includes(toId)) {
+                    const notation = getMoveNotation(boardCopy, fromId, toId)
+
                     boardCopy[toId] = from
                     delete boardCopy[fromId]
 
                     if (!isCheck(turn, boardCopy)) {
-                        // Move notation
-                        let notation: string = toId
-                        if (from?.piece !== 'pawn')
-                            notation = pieceNotation[from.piece] + notation
-
-                        if (toId in board) notation = notation + 'x'
-
                         state.movesHistory.push(notation)
                         state.board = boardCopy
                         state.turn = opposite(turn)
