@@ -7,7 +7,9 @@ export default function History() {
     return (
         <div className="history">
             {history.map((h) => (
-                <div className="history-item">{h}</div>
+                <div className="history-item" key={h.id}>
+                    {h.move}
+                </div>
             ))}
         </div>
     )

@@ -1,4 +1,4 @@
-import { Board, TColor, TileID } from './types/Board.ts'
+import { Board, TColor, TileID, TTile } from './types/Board.ts'
 
 export function isBlackTile(id: string): boolean {
     return (id.charCodeAt(0) + parseInt(id[1])) % 2 === 0
@@ -174,16 +174,17 @@ export function isCheck(color: TColor, board: Board) {
 
 export function getMoveNotation(
     board: Board,
-    fromID: TileID,
-    toID: TileID
+    from: TTile,
+    toID: TileID,
+    capture: boolean
 ): string {
     let notation: string = toID
 
-    const from = board[fromID]
     if (!from) return notation
 
     if (from.piece !== 'pawn') notation = pieceNotation[from.piece] + notation
-    if (toID in board) notation = notation + 'x'
+    if (capture) notation = notation + 'x'
+    if (isCheck(opposite(from.color), board)) notation = notation + '+'
 
     return notation
 }

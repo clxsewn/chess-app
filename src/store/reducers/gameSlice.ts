@@ -9,16 +9,23 @@ import {
 
 type TColorOrNull = TColor | null
 
+interface IMove {
+    id: number
+    move: string
+}
+
 interface Game {
     board: Board
     id: number
-    movesHistory: string[]
+    movesHistory: IMove[]
     selected: TileID | null
-    possibleMoves: string[]
+    possibleMoves: TileID[]
     turn: TColorOrNull
     gameStarted: boolean
     winner: TColorOrNull
 }
+
+let moveCounter = 0
 
 const initialState: Game = {
     board: {
@@ -107,13 +114,22 @@ export const gameSlice = createSlice({
                 const possibleMoves = getPossibleMoves(boardCopy, fromId)
 
                 if (possibleMoves.includes(toId)) {
-                    const notation = getMoveNotation(boardCopy, fromId, toId)
+                    const capture = toId in boardCopy
 
                     boardCopy[toId] = from
                     delete boardCopy[fromId]
 
+                    const notation = getMoveNotation(
+                        boardCopy,
+                        from,
+                        toId,
+                        capture
+                    )
                     if (!isCheck(turn, boardCopy)) {
-                        state.movesHistory.push(notation)
+                        state.movesHistory.push({
+                            id: moveCounter++,
+                            move: notation,
+                        })
                         state.board = boardCopy
                         state.turn = opposite(turn)
                     }
@@ -135,9 +151,10 @@ export const gameSlice = createSlice({
             gameSlice.caseReducers.unselect(state)
 
             state.turn = null
-            state.movesHistory.push(
-                action.payload.winner === 'white' ? '1-0' : '0-1'
-            )
+            state.movesHistory.push({
+                id: moveCounter++,
+                move: action.payload.winner === 'white' ? '1-0' : '0-1',
+            })
             state.winner = action.payload.winner
         },
     },
