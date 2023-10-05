@@ -140,8 +140,8 @@ function _getPossibleMoves(board: Board, id: TileID): TileID[] {
                 ...repeat(id, ['down', 'left'], board),
             ]
 
-        case 'king':
-            return [
+        case 'king': {
+            const mv = [
                 mov(id, ['up']),
                 mov(id, ['up', 'right']),
                 mov(id, ['right']),
@@ -151,7 +151,39 @@ function _getPossibleMoves(board: Board, id: TileID): TileID[] {
                 mov(id, ['left']),
                 mov(id, ['left', 'up']),
             ]
+
+            const { color } = board[id]!
+            const startKingPos = color === 'white' ? 'e1' : 'e8'
+
+            // King is at starting position
+            if (startKingPos === id) {
+                // short castling
+                if (
+                    !(mov(id, ['right']) in board) &&
+                    !(mov(id, ['right', 'right']) in board) &&
+                    board[mov(id, ['right', 'right', 'right'])]?.piece ===
+                        'rook'
+                ) {
+                    mv.push(mov(id, ['right', 'right']))
+                }
+
+                // long castling
+                if (
+                    !(mov(id, ['left']) in board) &&
+                    !(mov(id, ['left', 'left']) in board) &&
+                    !(mov(id, ['left', 'left', 'left']) in board) &&
+                    board[mov(id, ['left', 'left', 'left', 'left'])]?.piece ===
+                        'rook'
+                ) {
+                    mv.push(mov(id, ['left', 'left']))
+                }
+            }
+
+            return mv
+        }
     }
+
+    return []
 }
 
 export function isCheck(color: TColor, board: Board) {
