@@ -29,24 +29,23 @@ export default function Timer({
         },
     })
 
-    let animatedClass = ''
     if (currTurn !== turn) {
         if (turn === forPlayer) {
             resume()
-            if (seconds < 15) animatedClass = 'danger-time'
         } else {
             pause()
-            animatedClass = ''
         }
         setCurrTurn(turn)
     }
 
+    const isActive = turn === forPlayer
+
+    const activeClass = isActive ? ' active' : ''
+    const animatedClass = seconds < 15 && isActive ? ' danger-time' : ''
+
     return (
-        <div
-            className={`timer ${forPlayer} ${animatedClass}`}
-            style={{ backgroundColor: forPlayer }}
-        >
-            <i className="pi pi-stopwatch"></i>
+        <div className={`timer ${forPlayer + activeClass + animatedClass}`}>
+            <div>{isActive && <i className="pi pi-stopwatch"></i>}</div>
             <span className="time">
                 <span className="digit">{Math.floor(minutes / 10)}</span>
                 <span className="digit">{minutes % 10}</span>
