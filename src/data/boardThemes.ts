@@ -1,6 +1,7 @@
 import { Themes } from '../types/Theme.ts'
+import { Color } from '../types/Color.ts'
 
-export type IBoardThemes = Themes<string>
+export type IBoardThemes = Themes<Color>
 
 const tilesThemes: IBoardThemes = [
     {

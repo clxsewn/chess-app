@@ -3,28 +3,30 @@ import { useAppDispatch } from '../../hooks.ts'
 import { move, select, unselect } from '../../store/reducers/gameSlice.ts'
 import './styles.scss'
 import { TileID } from '../../types/Board.ts'
+import { Color } from '../../types/Color.ts'
 
 export default function Tile({
     id,
     colors,
     piece,
     movable,
-    selected,
+    highlighted,
     possible,
     drawColumnLabel,
 }: {
     id: TileID
-    colors: [string, string]
+    colors: [Color, Color]
     piece?: string
     movable: boolean
-    selected: boolean
+    highlighted: boolean
     possible: boolean
     drawColumnLabel: boolean
 }) {
     const dispatch = useAppDispatch()
 
     function dragStartHandler(e: DragEvent, id: TileID) {
-        dispatch(unselect())
+        dispatch(select(id))
+        e.dataTransfer.effectAllowed = 'linkMove'
         e.dataTransfer.clearData()
         e.dataTransfer.setData('startId', id)
     }
@@ -60,7 +62,7 @@ export default function Tile({
         <div
             className={`tile`}
             style={{
-                backgroundColor: selected ? '#ffc471' : colors[0],
+                backgroundColor: highlighted ? '#ffc471' : colors[0],
                 color: colors[1],
             }}
             onClick={() => onClickHandler(id)}

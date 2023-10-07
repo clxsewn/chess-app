@@ -20,6 +20,7 @@ interface Game {
     movesHistory: IMove[]
     selected: TileID | null
     possibleMoves: TileID[]
+    lastMove: [TileID, TileID] | [null, null]
     turn: TColorOrNull
     gameStarted: boolean
     winner: TColorOrNull
@@ -67,6 +68,7 @@ const initialState: Game = {
     },
     id: -1,
     movesHistory: [],
+    lastMove: [null, null],
     selected: null,
     possibleMoves: [],
     gameStarted: false,
@@ -130,12 +132,13 @@ export const gameSlice = createSlice({
                             id: moveCounter++,
                             move: notation,
                         })
+                        state.lastMove = [fromId, toId]
                         state.board = boardCopy
                         state.turn = opposite(turn)
                     }
                 }
-                gameSlice.caseReducers.unselect(state)
             }
+            gameSlice.caseReducers.unselect(state)
         },
 
         start: (state) => {

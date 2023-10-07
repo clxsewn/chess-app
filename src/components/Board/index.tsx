@@ -15,9 +15,8 @@ export default function Board() {
 
     const { view } = boardView
 
-    const { board, turn, selected, possibleMoves, winner } = useAppSelector(
-        (state) => state.game
-    )
+    const { board, turn, selected, possibleMoves, lastMove, winner } =
+        useAppSelector((state) => state.game)
 
     useEffect(() => {
         if (winner && toastCenter.current) {
@@ -77,7 +76,9 @@ export default function Board() {
                             : undefined
                     }
                     movable={board[t]?.color === turn}
-                    selected={selected === t}
+                    highlighted={
+                        selected === t || lastMove[0] === t || lastMove[1] === t
+                    }
                     possible={possibleMoves.includes(t)}
                     drawColumnLabel={vID > 55}
                 />
