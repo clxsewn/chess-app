@@ -60,9 +60,9 @@ export default function Tile({
 
     return (
         <div
-            className={`tile`}
+            className={`tile ${highlighted ? ' highlighted' : ''}`}
             style={{
-                backgroundColor: highlighted ? '#ffc471' : colors[0],
+                backgroundColor: colors[0],
                 color: colors[1],
             }}
             onClick={() => onClickHandler(id)}
@@ -71,6 +71,7 @@ export default function Tile({
             onDragOver={(e) => dragOverHandler(e)}
             onDrop={(e) => dropHandler(e, id)}
         >
+            {highlighted && <div className="highlighted" />}
             {id[0] === 'a' && <span className="str-symbol">{id[1]}</span>}
             {drawColumnLabel && <span className="col-symbol">{id[0]}</span>}
             {possible && (
