@@ -18,7 +18,7 @@ export default function Tile({
     colors: [Color, Color]
     piece?: string
     movable: boolean
-    highlighted: boolean
+    highlighted?: Color
     possible: boolean
     drawColumnLabel: boolean
 }) {
@@ -71,7 +71,12 @@ export default function Tile({
             onDragOver={(e) => dragOverHandler(e)}
             onDrop={(e) => dropHandler(e, id)}
         >
-            {highlighted && <div className="highlighted" />}
+            {highlighted && (
+                <div
+                    className="highlighted"
+                    style={{ backgroundColor: highlighted }}
+                />
+            )}
             {id[0] === 'a' && <span className="str-symbol">{id[1]}</span>}
             {drawColumnLabel && <span className="col-symbol">{id[0]}</span>}
             {possible && (
