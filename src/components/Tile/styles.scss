@@ -15,7 +15,6 @@ $board-border-radius: 6px;
     position: absolute;
     z-index: 3;
 
-    background-color: #ffff00;
     opacity: .6;
   }
 
@@ -28,7 +27,6 @@ $board-border-radius: 6px;
     left: 40%;
 
     border-radius: 50%;
-    background-color: #ffc471;
 
     &.capture {
       top: 10%;
@@ -98,13 +96,4 @@ $board-border-radius: 6px;
   &:nth-child(64) {
     border-bottom-right-radius: $board-border-radius;
   }
-}
-
-.draggable {
-  cursor: grab !important;
-}
-
-.being-dragged {
-  cursor: grabbing !important;
-  background-color: red;
 }

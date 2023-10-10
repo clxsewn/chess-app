@@ -78,9 +78,8 @@ export default function Board() {
                     movable={board[t]?.color === turn}
                     highlighted={
                         selected === t || lastMove[0] === t || lastMove[1] === t
-                            ? tiles.theme.highlight
-                            : undefined
                     }
+                    highlightColor={tiles.theme.highlight}
                     possible={possibleMoves.includes(t)}
                     drawColumnLabel={vID > 55}
                 />

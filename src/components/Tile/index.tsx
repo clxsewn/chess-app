@@ -11,6 +11,7 @@ export default function Tile({
     piece,
     movable,
     highlighted,
+    highlightColor,
     possible,
     drawColumnLabel,
 }: {
@@ -18,7 +19,8 @@ export default function Tile({
     colors: [Color, Color]
     piece?: string
     movable: boolean
-    highlighted?: Color
+    highlighted: boolean
+    highlightColor: Color
     possible: boolean
     drawColumnLabel: boolean
 }) {
@@ -74,13 +76,16 @@ export default function Tile({
             {highlighted && (
                 <div
                     className="highlighted"
-                    style={{ backgroundColor: highlighted }}
+                    style={{ backgroundColor: highlightColor }}
                 />
             )}
             {id[0] === 'a' && <span className="str-symbol">{id[1]}</span>}
             {drawColumnLabel && <span className="col-symbol">{id[0]}</span>}
             {possible && (
-                <div className={`possible ${piece ? 'capture' : ''}`}>
+                <div
+                    className={`possible ${piece ? 'capture' : ''}`}
+                    style={{ backgroundColor: highlightColor }}
+                >
                     <div
                         className="inner"
                         style={{ backgroundColor: colors[0] }}
