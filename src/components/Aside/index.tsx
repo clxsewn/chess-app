@@ -8,24 +8,35 @@ import {
 import tilesThemes from '../../data/boardThemes.ts'
 import { useAppDispatch, useAppSelector } from '../../hooks.ts'
 import { Button } from 'primereact/button'
-import { start } from '../../store/reducers/gameSlice.ts'
+import { discard, GameStatus, start } from '../../store/reducers/gameSlice.ts'
 import { Divider } from 'primereact/divider'
 import History from '../History'
 
 export default function Aside() {
-    const selected = useAppSelector((state) => state.appearance.tiles)
     const dispatch = useAppDispatch()
 
-    const startButtonHandler = () => {
-        dispatch(start())
-    }
+    const selected = useAppSelector((state) => state.appearance.tiles)
+    const gameStatus = useAppSelector((state) => state.game.gameStatus)
+
+    const startButtonHandler = () => dispatch(start())
+    const discardButtonHandler = () => dispatch(discard())
 
     return (
         <aside>
             <TabView>
                 <TabPanel header="Game" leftIcon="pi pi-play mr">
                     <div className="tab-content">
-                        <Button label="New game" onClick={startButtonHandler} />
+                        {gameStatus === GameStatus.Started ? (
+                            <Button
+                                label="Discard game"
+                                onClick={discardButtonHandler}
+                            ></Button>
+                        ) : (
+                            <Button
+                                label="New game"
+                                onClick={startButtonHandler}
+                            />
+                        )}
                     </div>
                 </TabPanel>
                 <TabPanel header="Settings" leftIcon="pi pi-cog mr">

@@ -14,6 +14,12 @@ interface IMove {
     move: string
 }
 
+export enum GameStatus {
+    Waiting,
+    Started,
+    Ended,
+}
+
 interface Game {
     board: Board
     id: number
@@ -22,7 +28,7 @@ interface Game {
     possibleMoves: TileID[]
     lastMove: [TileID, TileID] | [null, null]
     turn: TColorOrNull
-    gameStarted: boolean
+    gameStatus: GameStatus
     winner: TColorOrNull
 }
 
@@ -71,7 +77,7 @@ const initialState: Game = {
     lastMove: [null, null],
     selected: null,
     possibleMoves: [],
-    gameStarted: false,
+    gameStatus: GameStatus.Waiting,
     turn: null,
     winner: null,
 }
@@ -111,7 +117,7 @@ export const gameSlice = createSlice({
                 from &&
                 fromId !== toId &&
                 from?.color === turn &&
-                state.gameStarted
+                state.gameStatus === GameStatus.Started
             ) {
                 const possibleMoves = getPossibleMoves(boardCopy, fromId)
 
@@ -145,7 +151,7 @@ export const gameSlice = createSlice({
             return {
                 ...initialState,
                 turn: 'white',
-                gameStarted: true,
+                gameStatus: GameStatus.Started,
                 id: state.id + 1,
             }
         },
@@ -160,8 +166,10 @@ export const gameSlice = createSlice({
             })
             state.winner = action.payload.winner
         },
+
+        discard: () => initialState,
     },
 })
 
-export const { select, unselect, move, start, end } = gameSlice.actions
+export const { select, unselect, move, start, end, discard } = gameSlice.actions
 export default gameSlice.reducer
