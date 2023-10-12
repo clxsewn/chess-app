@@ -21,7 +21,7 @@ export const tilesThemes: IBoardThemes = [
         theme: {
             black: '#779954',
             white: '#e9edcc',
-            highlight: '#ffff00',
+            highlight: '#ffff3f',
         },
     },
     {

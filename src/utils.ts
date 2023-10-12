@@ -182,8 +182,6 @@ function _getPossibleMoves(board: Board, id: TileID): TileID[] {
             return mv
         }
     }
-
-    return []
 }
 
 export function isCheck(color: TColor, board: Board) {
@@ -219,6 +217,14 @@ export function getMoveNotation(
     if (isCheck(opposite(from.color), board)) notation = notation + '+'
 
     return notation
+}
+
+export function enPassant(tile: TTile, toId: TileID): boolean {
+    return (
+        tile.piece === 'pawn' &&
+        ((tile.color === 'white' && toId[1] === '8') ||
+            (tile.color === 'black' && toId[1] === '1'))
+    )
 }
 
 const pieceNotation = {

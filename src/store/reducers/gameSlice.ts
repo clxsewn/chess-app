@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board, TColor, TileID } from '../../types/Board.ts'
 import {
+    enPassant,
     getMoveNotation,
     getPossibleMoves,
     isCheck,
@@ -123,6 +124,10 @@ export const gameSlice = createSlice({
 
                 if (possibleMoves.includes(toId)) {
                     const capture = toId in boardCopy
+
+                    if (enPassant(from, toId)) {
+                        from.piece = 'queen'
+                    }
 
                     boardCopy[toId] = from
                     delete boardCopy[fromId]
