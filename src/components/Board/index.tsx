@@ -1,9 +1,9 @@
 import Tile from '../Tile'
 import './styles.scss'
-import { isBlackTile } from '../../utils.ts'
 import { useAppSelector } from '../../hooks.ts'
 import { useEffect, useRef } from 'react'
 import { Toast } from 'primereact/toast'
+import { isBlackTile } from '../../utils/helpers.ts'
 
 export default function Board() {
     const boardRef = useRef<HTMLDivElement | null>(null)

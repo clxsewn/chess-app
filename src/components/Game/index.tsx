@@ -3,7 +3,7 @@ import Aside from '../Aside'
 import './styles.scss'
 import Timer from '../Timer'
 import { useAppSelector } from '../../hooks.ts'
-import { opposite } from '../../utils.ts'
+import { opposite } from '../../utils/helpers.ts'
 
 export default function Game() {
     const viewName = useAppSelector((state) => state.appearance.boardView.name)

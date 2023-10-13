@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { useTimer } from 'react-timer-hook'
 import { end } from '../../store/reducers/gameSlice.ts'
 import { TColor } from '../../types/Board.ts'
-import { opposite } from '../../utils.ts'
 import './styles.scss'
+import { opposite } from '../../utils/helpers.ts'
 
 export default function Timer({
     duration,

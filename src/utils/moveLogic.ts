@@ -1,8 +1,5 @@
-import { Board, TColor, TileID, TTile } from './types/Board.ts'
-
-export function isBlackTile(id: string): boolean {
-    return (id.charCodeAt(0) + parseInt(id[1])) % 2 === 0
-}
+import { Board, TColor, TileID, TTile } from '../types/Board.ts'
+import { correctTileId, opposite } from './helpers.ts'
 
 export type direction = 'up' | 'down' | 'left' | 'right'
 
@@ -52,14 +49,6 @@ function repeat(pos: TileID, direction: direction[], board: Board): TileID[] {
     }
 
     return returnArr
-}
-
-export function opposite(piece: TColor): TColor {
-    return piece === 'white' ? 'black' : 'white'
-}
-
-export function correctTileId(id: string): boolean {
-    return id[0] >= 'a' && id[0] <= 'h' && id[1] >= '1' && id[1] <= '8'
 }
 
 export function getPossibleMoves(board: Board, id: TileID): TileID[] {
@@ -217,14 +206,6 @@ export function getMoveNotation(
     if (isCheck(opposite(from.color), board)) notation = notation + '+'
 
     return notation
-}
-
-export function enPassant(tile: TTile, toId: TileID): boolean {
-    return (
-        tile.piece === 'pawn' &&
-        ((tile.color === 'white' && toId[1] === '8') ||
-            (tile.color === 'black' && toId[1] === '1'))
-    )
 }
 
 const pieceNotation = {

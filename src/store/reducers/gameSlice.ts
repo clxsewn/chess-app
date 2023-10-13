@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board, TColor, TileID } from '../../types/Board.ts'
 import {
-    enPassant,
     getMoveNotation,
     getPossibleMoves,
     isCheck,
-    opposite,
-} from '../../utils.ts'
+} from '../../utils/moveLogic.ts'
+import { enPassant, opposite } from '../../utils/helpers.ts'
 
 type TColorOrNull = TColor | null
 
@@ -169,6 +168,7 @@ export const gameSlice = createSlice({
                 id: moveCounter++,
                 move: action.payload.winner === 'white' ? '1-0' : '0-1',
             })
+            state.gameStatus = GameStatus.Ended
             state.winner = action.payload.winner
         },
 
