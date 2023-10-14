@@ -29,6 +29,7 @@ export default function Aside() {
                         {gameStatus === GameStatus.Started ? (
                             <Button
                                 label="Discard game"
+                                severity="danger"
                                 onClick={discardButtonHandler}
                             ></Button>
                         ) : (
@@ -41,6 +42,7 @@ export default function Aside() {
                 </TabPanel>
                 <TabPanel header="Settings" leftIcon="pi pi-cog mr">
                     <div className="tab-content">
+                        <span>Board theme:</span>
                         <Dropdown
                             onChange={(e) => dispatch(setTilesTheme(e.value))}
                             options={tilesThemes}
@@ -48,8 +50,9 @@ export default function Aside() {
                             value={selected}
                         />
                         <Divider />
+                        <span>Board view:</span>
                         <Button
-                            label="Toggle view"
+                            label="Toggle"
                             icon="pi pi-arrows-v"
                             onClick={() => dispatch(toggleBoardView())}
                         />

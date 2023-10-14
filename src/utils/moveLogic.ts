@@ -202,7 +202,7 @@ export function getMoveNotation(
     if (!from) return notation
 
     if (from.piece !== 'pawn') notation = pieceNotation[from.piece] + notation
-    if (capture) notation = notation + 'x'
+    if (capture) notation = 'x' + notation
     if (isCheck(opposite(from.color), board)) notation = notation + '+'
 
     return notation
