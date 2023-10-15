@@ -5,7 +5,7 @@ export interface Colors<T> {
 
 export interface Theme<T> {
     name: string
-    theme: Colors<T>
+    theme: T
 }
 
 export type Themes<T> = Theme<T>[]
