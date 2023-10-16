@@ -137,6 +137,7 @@ export const gameSlice = createSlice({
                         toId,
                         capture
                     )
+
                     if (!isCheck(turn, boardCopy)) {
                         state.movesHistory.push({
                             id: moveCounter++,

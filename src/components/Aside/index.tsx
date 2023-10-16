@@ -42,7 +42,8 @@ export default function Aside() {
                 </TabPanel>
                 <TabPanel header="Settings" leftIcon="pi pi-cog mr">
                     <div className="tab-content">
-                        <span>Board theme:</span>
+                        <h3>Theme</h3>
+                        <span className="mr">Board theme:</span>
                         <Dropdown
                             onChange={(e) => dispatch(setTilesTheme(e.value))}
                             options={tilesThemes}
@@ -50,7 +51,8 @@ export default function Aside() {
                             value={selected}
                         />
                         <Divider />
-                        <span>Board view:</span>
+                        <h3>View</h3>
+                        <span className="mr">Board view:</span>
                         <Button
                             label="Toggle"
                             icon="pi pi-arrows-v"
