@@ -1,4 +1,4 @@
-import { DragEvent } from 'react'
+import { DragEvent, useState } from 'react'
 import { useAppDispatch } from '../../hooks.ts'
 import { move, select, unselect } from '../../store/reducers/gameSlice.ts'
 import './styles.scss'
@@ -24,6 +24,8 @@ export default function Tile({
     possible: boolean
     drawColumnLabel: boolean
 }) {
+    const [isMovingOver, setIsMovingOver] = useState(false)
+
     const dispatch = useAppDispatch()
 
     function dragStartHandler(e: DragEvent, id: TileID) {
@@ -35,6 +37,7 @@ export default function Tile({
 
     function dragLeaveHandler(e: DragEvent) {
         e.preventDefault()
+        setIsMovingOver(false)
     }
 
     function dragEndHandler(e: DragEvent) {
@@ -45,8 +48,14 @@ export default function Tile({
         e.preventDefault()
     }
 
+    function dragEnterHandler(e: DragEvent) {
+        e.preventDefault()
+        setIsMovingOver(true)
+    }
+
     function dropHandler(e: DragEvent, id: TileID) {
         e.preventDefault()
+        setIsMovingOver(false)
         dispatch(
             move({ from: e.dataTransfer.getData('startId') as TileID, to: id })
         )
@@ -71,8 +80,10 @@ export default function Tile({
             onDragLeave={(e) => dragLeaveHandler(e)}
             onDragEnd={(e) => dragEndHandler(e)}
             onDragOver={(e) => dragOverHandler(e)}
+            onDragEnter={(e) => dragEnterHandler(e)}
             onDrop={(e) => dropHandler(e, id)}
         >
+            {isMovingOver && <div className="moving-over-border" />}
             {highlighted && (
                 <div
                     className="highlighted"

@@ -18,6 +18,13 @@ $board-border-radius: 6px;
     opacity: .6;
   }
 
+  .moving-over-border {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 5px inset #a0d2fa;
+  }
+
   .possible {
     width: 20%;
     height: 20%;
