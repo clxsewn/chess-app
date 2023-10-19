@@ -40,11 +40,7 @@ export default function Tile({
         setIsMovingOver(false)
     }
 
-    function dragEndHandler(e: DragEvent) {
-        e.preventDefault()
-    }
-
-    function dragOverHandler(e: DragEvent) {
+    function preventDefault(e: DragEvent) {
         e.preventDefault()
     }
 
@@ -78,8 +74,8 @@ export default function Tile({
             }}
             onClick={() => onClickHandler(id)}
             onDragLeave={(e) => dragLeaveHandler(e)}
-            onDragEnd={(e) => dragEndHandler(e)}
-            onDragOver={(e) => dragOverHandler(e)}
+            onDragEnd={(e) => preventDefault(e)}
+            onDragOver={(e) => preventDefault(e)}
             onDragEnter={(e) => dragEnterHandler(e)}
             onDrop={(e) => dropHandler(e, id)}
         >

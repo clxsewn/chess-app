@@ -60,7 +60,10 @@ export default function Board() {
     })
 
     return (
-        <div className="board" ref={boardRef}>
+        <div
+            className={`board${selected ? ' tile-selected' : ''}`}
+            ref={boardRef}
+        >
             {view.map((t, vID) => (
                 <Tile
                     key={t}

@@ -10,7 +10,7 @@ import rb1 from '../assets/piecesSet1/rb.svg'
 import bb1 from '../assets/piecesSet1/bb.svg'
 import nb1 from '../assets/piecesSet1/nb.svg'
 import pb1 from '../assets/piecesSet1/pb.svg'
-import { Themes } from '../types/Theme.ts'
+import { Colors, Themes } from '../types/Theme.ts'
 
 export interface IPieces {
     king: string
@@ -21,7 +21,7 @@ export interface IPieces {
     pawn: string
 }
 
-export type IPiecesThemes = Themes<IPieces>
+export type IPiecesThemes = Themes<Colors<IPieces>>
 
 export const piecesThemes: IPiecesThemes = [
     {

@@ -5,4 +5,8 @@
 
   aspect-ratio: 1 / 1;
   position: relative;
+
+  &.tile-selected .tile * {
+    pointer-events: none;
+  }
 }
