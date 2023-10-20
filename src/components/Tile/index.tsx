@@ -14,6 +14,7 @@ export default function Tile({
     highlightColor,
     possible,
     drawColumnLabel,
+    selected,
 }: {
     id: TileID
     colors: [Color, Color]
@@ -23,6 +24,7 @@ export default function Tile({
     highlightColor: Color
     possible: boolean
     drawColumnLabel: boolean
+    selected: boolean
 }) {
     const [isMovingOver, setIsMovingOver] = useState(false)
 
@@ -67,7 +69,7 @@ export default function Tile({
 
     return (
         <div
-            className={`tile ${highlighted ? ' highlighted' : ''}`}
+            className={`tile${highlighted ? ' highlighted' : ''}`}
             style={{
                 backgroundColor: colors[0],
                 color: colors[1],
@@ -102,7 +104,7 @@ export default function Tile({
             {piece && (
                 <img
                     src={piece}
-                    className="piece"
+                    className={`piece${selected ? ' selected' : ''}`}
                     draggable={movable}
                     onDragStart={(e) => dragStartHandler(e, id)}
                 />

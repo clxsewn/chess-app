@@ -85,6 +85,7 @@ export default function Board() {
                     highlightColor={tiles.theme.highlight}
                     possible={possibleMoves.includes(t)}
                     drawColumnLabel={vID > 55}
+                    selected={t === selected}
                 />
             ))}
 
