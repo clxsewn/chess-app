@@ -13,6 +13,7 @@ export default function Tile({
     highlighted,
     highlightColor,
     possible,
+    drawRowLabel,
     drawColumnLabel,
     selected,
 }: {
@@ -23,6 +24,7 @@ export default function Tile({
     highlighted: boolean
     highlightColor: Color
     possible: boolean
+    drawRowLabel: boolean
     drawColumnLabel: boolean
     selected: boolean
 }) {
@@ -88,7 +90,7 @@ export default function Tile({
                     style={{ backgroundColor: highlightColor }}
                 />
             )}
-            {id[0] === 'a' && <span className="str-symbol">{id[1]}</span>}
+            {drawRowLabel && <span className="str-symbol">{id[1]}</span>}
             {drawColumnLabel && <span className="col-symbol">{id[0]}</span>}
             {possible && (
                 <div

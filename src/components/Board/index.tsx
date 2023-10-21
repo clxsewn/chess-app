@@ -9,9 +9,10 @@ export default function Board() {
     const boardRef = useRef<HTMLDivElement | null>(null)
     const toastCenter = useRef<Toast>(null)
 
-    const { tiles, pieces, boardView } = useAppSelector(
-        (state) => state.appearance
-    )
+    const { tiles, pieces, boardView, rowLabelPos, columnLabelPos } =
+        useAppSelector((state) => state.appearance)
+
+    const [rh, ch] = [rowLabelPos.handler, columnLabelPos.handler]
 
     const { view } = boardView
 
@@ -84,7 +85,8 @@ export default function Board() {
                     }
                     highlightColor={tiles.theme.highlight}
                     possible={possibleMoves.includes(t)}
-                    drawColumnLabel={vID > 55}
+                    drawRowLabel={rh(vID)}
+                    drawColumnLabel={ch(vID)}
                     selected={t === selected}
                 />
             ))}

@@ -2,6 +2,8 @@ import { TabPanel, TabView } from 'primereact/tabview'
 import './styles.scss'
 import { Dropdown } from 'primereact/dropdown'
 import {
+    setColumnLabelPos,
+    setRowLabelPos,
     setTilesTheme,
     toggleBoardView,
 } from '../../store/reducers/appearanceSlice.ts'
@@ -11,11 +13,14 @@ import { Button } from 'primereact/button'
 import { discard, GameStatus, start } from '../../store/reducers/gameSlice.ts'
 import { Divider } from 'primereact/divider'
 import History from '../History'
+import { columnLabelPoses, rowLabelPoses } from '../../data/labelsPoses.ts'
 
 export default function Aside() {
     const dispatch = useAppDispatch()
 
-    const selected = useAppSelector((state) => state.appearance.tiles)
+    const { tiles, columnLabelPos, rowLabelPos } = useAppSelector(
+        (state) => state.appearance
+    )
     const gameStatus = useAppSelector((state) => state.game.gameStatus)
 
     const startButtonHandler = () => dispatch(start())
@@ -48,7 +53,7 @@ export default function Aside() {
                             onChange={(e) => dispatch(setTilesTheme(e.value))}
                             options={tilesThemes}
                             optionLabel="name"
-                            value={selected}
+                            value={tiles}
                         />
                         <Divider />
                         <h3>View</h3>
@@ -57,6 +62,25 @@ export default function Aside() {
                             label="Toggle"
                             icon="pi pi-arrows-v"
                             onClick={() => dispatch(toggleBoardView())}
+                        />
+                        <Divider />
+                        <h3>Label positions</h3>
+                        <span className="mr">Row label:</span>
+                        <Dropdown
+                            onChange={(e) => dispatch(setRowLabelPos(e.value))}
+                            options={rowLabelPoses}
+                            optionLabel="name"
+                            value={rowLabelPos}
+                        />
+                        <br />
+                        <span className="mr">Column label:</span>
+                        <Dropdown
+                            onChange={(e) =>
+                                dispatch(setColumnLabelPos(e.value))
+                            }
+                            options={columnLabelPoses}
+                            optionLabel="name"
+                            value={columnLabelPos}
                         />
                     </div>
                 </TabPanel>
