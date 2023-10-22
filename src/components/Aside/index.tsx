@@ -1,6 +1,6 @@
 import { TabPanel, TabView } from 'primereact/tabview'
 import './styles.scss'
-import { Dropdown } from 'primereact/dropdown'
+import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 import {
     setColumnLabelPos,
     setRowLabelPos,
@@ -26,6 +26,23 @@ export default function Aside() {
     const startButtonHandler = () => dispatch(start())
     const discardButtonHandler = () => dispatch(discard())
 
+    const setTilesThemeHandler = (e: DropdownChangeEvent) => {
+        dispatch(setTilesTheme(e.value))
+        localStorage.setItem('tilesTheme', e.value.name)
+    }
+
+    const setColumnLabelHandle = (e: DropdownChangeEvent) => {
+        dispatch(setColumnLabelPos(e.value))
+    }
+
+    const setRowLabelHandle = (e: DropdownChangeEvent) => {
+        dispatch(setRowLabelPos(e.value))
+    }
+
+    const toggleViewBoardHandle = () => {
+        dispatch(toggleBoardView())
+    }
+
     return (
         <aside>
             <TabView>
@@ -50,7 +67,7 @@ export default function Aside() {
                         <h3>Theme</h3>
                         <span className="mr">Board theme:</span>
                         <Dropdown
-                            onChange={(e) => dispatch(setTilesTheme(e.value))}
+                            onChange={setTilesThemeHandler}
                             options={tilesThemes}
                             optionLabel="name"
                             value={tiles}
@@ -61,13 +78,13 @@ export default function Aside() {
                         <Button
                             label="Toggle"
                             icon="pi pi-arrows-v"
-                            onClick={() => dispatch(toggleBoardView())}
+                            onClick={toggleViewBoardHandle}
                         />
                         <Divider />
                         <h3>Label positions</h3>
                         <span className="mr">Row label:</span>
                         <Dropdown
-                            onChange={(e) => dispatch(setRowLabelPos(e.value))}
+                            onChange={setRowLabelHandle}
                             options={rowLabelPoses}
                             optionLabel="name"
                             value={rowLabelPos}
@@ -75,9 +92,7 @@ export default function Aside() {
                         <br />
                         <span className="mr">Column label:</span>
                         <Dropdown
-                            onChange={(e) =>
-                                dispatch(setColumnLabelPos(e.value))
-                            }
+                            onChange={setColumnLabelHandle}
                             options={columnLabelPoses}
                             optionLabel="name"
                             value={columnLabelPos}

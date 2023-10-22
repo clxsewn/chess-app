@@ -60,6 +60,8 @@ export default function Board() {
         }
     })
 
+    useEffect(() => {})
+
     return (
         <div
             className={`board${selected ? ' tile-selected' : ''}`}
