@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../hooks.ts'
+import { useAppSelector } from '../../../../hooks.ts'
 import './styles.scss'
 
 export default function History() {
