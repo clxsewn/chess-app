@@ -6,7 +6,7 @@ import {
 import { Button } from 'primereact/button'
 import { useAppDispatch, useAppSelector } from '../../../../hooks.ts'
 
-export default function Game() {
+export default function GameTab() {
     const dispatch = useAppDispatch()
     const gameStatus = useAppSelector((state) => state.game.gameStatus)
 

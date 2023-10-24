@@ -14,7 +14,7 @@ import {
     toggleBoardView,
 } from '../../../../store/reducers/appearanceSlice.ts'
 
-export default function Settings() {
+export default function SettingsTab() {
     const dispatch = useAppDispatch()
 
     const { tiles, columnLabelPos, rowLabelPos } = useAppSelector(

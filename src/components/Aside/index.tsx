@@ -1,29 +1,52 @@
+import { FC } from 'react'
 import { TabPanel, TabView } from 'primereact/tabview'
 import './styles.scss'
 
-import History from './tabs/History'
-import Game from './tabs/Game'
-import Settings from './tabs/Settings'
+import HistoryTab from './tabs/HistoryTab'
+import GameTab from './tabs/Game'
+import SettingsTab from './tabs/SettingsTab'
+
+interface ITabItem {
+    title: string
+    component: FC
+    icon: string
+}
+
+const tabsList: ITabItem[] = [
+    {
+        title: 'Game',
+        component: GameTab,
+        icon: 'pi-play',
+    },
+    {
+        title: 'Settings',
+        component: SettingsTab,
+        icon: 'pi-cog',
+    },
+    {
+        title: 'History',
+        component: HistoryTab,
+        icon: 'pi-clock',
+    },
+]
 
 export default function Aside() {
     return (
         <aside>
             <TabView>
-                <TabPanel header="Game" leftIcon="pi pi-play mr-6">
-                    <div className="tab-content">
-                        <Game />
-                    </div>
-                </TabPanel>
-                <TabPanel header="Settings" leftIcon="pi pi-cog mr-6">
-                    <div className="tab-content">
-                        <Settings />
-                    </div>
-                </TabPanel>
-                <TabPanel header="History" leftIcon="pi pi-clock mr-6">
-                    <div className="tab-content">
-                        <History />
-                    </div>
-                </TabPanel>
+                {tabsList.map((i) => {
+                    return (
+                        <TabPanel
+                            key={i.title}
+                            header={i.title}
+                            leftIcon={`pi ${i.icon} mr-6`}
+                        >
+                            <div className="tab-content">
+                                <i.component />
+                            </div>
+                        </TabPanel>
+                    )
+                })}
             </TabView>
         </aside>
     )

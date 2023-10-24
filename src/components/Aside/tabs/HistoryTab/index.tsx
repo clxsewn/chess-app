@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../../../hooks.ts'
 import './styles.scss'
 
-export default function History() {
+export default function HistoryTab() {
     const history = useAppSelector((state) => state.game.movesHistory)
 
     return (
