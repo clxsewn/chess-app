@@ -4,6 +4,7 @@ import { useAppSelector } from '../../hooks.ts'
 import { useEffect, useRef } from 'react'
 import { Toast } from 'primereact/toast'
 import { isBlackTile } from '../../utils/helpers.ts'
+import { columnLabelPoses, rowLabelPoses } from '../../data/labelsPoses.ts'
 
 export default function Board() {
     const boardRef = useRef<HTMLDivElement | null>(null)
@@ -12,7 +13,10 @@ export default function Board() {
     const { tiles, pieces, boardView, rowLabelPos, columnLabelPos } =
         useAppSelector((state) => state.appearance)
 
-    const [rh, ch] = [rowLabelPos.handler, columnLabelPos.handler]
+    const [rh, ch] = [
+        rowLabelPoses[rowLabelPos],
+        columnLabelPoses[columnLabelPos],
+    ]
 
     const { view } = boardView
 

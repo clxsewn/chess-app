@@ -61,16 +61,14 @@ export default function SettingsTab() {
             <span className="mr">Row label:</span>
             <Dropdown
                 onChange={setRowLabelHandle}
-                options={rowLabelPoses}
-                optionLabel="name"
+                options={Object.keys(rowLabelPoses)}
                 value={rowLabelPos}
             />
             <br />
             <span className="mr">Column label:</span>
             <Dropdown
                 onChange={setColumnLabelHandle}
-                options={columnLabelPoses}
-                optionLabel="name"
+                options={Object.keys(columnLabelPoses)}
                 value={columnLabelPos}
             />
         </>

@@ -1,13 +1,13 @@
-import { Colors, Themes } from '../types/Theme.ts'
+import { Colors, Theme } from '../types/Theme.ts'
 import { Color } from '../types/Color.ts'
 
 interface ColorsAndHighlights extends Colors<Color> {
     highlight: Color
 }
 
-export type IBoardThemes = Themes<ColorsAndHighlights>
+export type IBoardTheme = Theme<ColorsAndHighlights>
 
-export const tilesThemes: IBoardThemes = [
+export const tilesThemes: IBoardTheme[] = [
     {
         name: 'Green',
         theme: {

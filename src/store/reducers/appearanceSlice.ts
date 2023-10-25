@@ -1,18 +1,39 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { defaultBoardTheme } from '../../data/boardThemes.ts'
-import { defaultPiecesTheme, piecesThemes } from '../../data/piecesThemes.ts'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { defaultBoardTheme, IBoardTheme } from '../../data/boardThemes.ts'
+import {
+    defaultPiecesTheme,
+    IPieces,
+    piecesThemes,
+} from '../../data/piecesThemes.ts'
 import { possibleViews } from '../../data/boardViews.ts'
-import { columnLabelPoses, rowLabelPoses } from '../../data/labelsPoses.ts'
+import {
+    columnLabelPoses,
+    rowLabelPoses,
+    TColumnLabelPos,
+    TRowLabelPos,
+} from '../../data/labelsPoses.ts'
+import { IBoardView } from '../../types/BoardView.ts'
+import { Colors, Theme } from '../../types/Theme.ts'
+
+interface TAppearance {
+    boardView: IBoardView
+    tiles: IBoardTheme
+    pieces: Theme<Colors<IPieces>>
+    rowLabelPos: TRowLabelPos
+    columnLabelPos: TColumnLabelPos
+}
+
+const initialState: TAppearance = {
+    boardView: possibleViews[0],
+    tiles: defaultBoardTheme,
+    pieces: defaultPiecesTheme,
+    rowLabelPos: 'Left',
+    columnLabelPos: 'Bottom',
+}
 
 export const appearanceSlice = createSlice({
     name: 'appearance',
-    initialState: {
-        boardView: possibleViews[0],
-        tiles: defaultBoardTheme,
-        pieces: defaultPiecesTheme,
-        rowLabelPos: rowLabelPoses[0],
-        columnLabelPos: columnLabelPoses[0],
-    },
+    initialState: initialState,
     reducers: {
         toggleBoardView: (state) => {
             state.boardView =
@@ -26,11 +47,13 @@ export const appearanceSlice = createSlice({
         setPiecesTheme: (state, action) => {
             state.pieces = piecesThemes[action.payload.id]
         },
-        setRowLabelPos: (state, action) => {
-            state.rowLabelPos = action.payload
+        setRowLabelPos: (state, action: PayloadAction<TRowLabelPos>) => {
+            if (rowLabelPoses[action.payload])
+                state.rowLabelPos = action.payload
         },
-        setColumnLabelPos: (state, action) => {
-            state.columnLabelPos = action.payload
+        setColumnLabelPos: (state, action: PayloadAction<TColumnLabelPos>) => {
+            if (columnLabelPoses[action.payload])
+                state.columnLabelPos = action.payload
         },
     },
 })
