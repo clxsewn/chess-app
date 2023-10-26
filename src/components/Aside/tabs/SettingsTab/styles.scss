@@ -1,0 +1,10 @@
+.view-formatter {
+  display: grid;
+
+  margin-top: 10px;
+  margin-left: 10px;
+
+  gap: 10px;
+  align-items: center;
+  grid-template-columns: max-content min-content;
+}

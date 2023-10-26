@@ -1,6 +1,5 @@
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 import tilesThemes from '../../../../data/boardThemes.ts'
-import { Divider } from 'primereact/divider'
 import { Button } from 'primereact/button'
 import {
     columnLabelPoses,
@@ -13,6 +12,8 @@ import {
     setTilesTheme,
     toggleBoardView,
 } from '../../../../store/reducers/appearanceSlice.ts'
+
+import './styles.scss'
 
 export default function SettingsTab() {
     const dispatch = useAppDispatch()
@@ -41,36 +42,41 @@ export default function SettingsTab() {
     return (
         <>
             <h3>Theme</h3>
-            <span className="mr">Board theme:</span>
-            <Dropdown
-                onChange={setTilesThemeHandler}
-                options={tilesThemes}
-                optionLabel="name"
-                value={tiles}
-            />
-            <Divider />
+            <div className="view-formatter">
+                <span className="mr">Board theme:</span>
+                <Dropdown
+                    onChange={setTilesThemeHandler}
+                    options={tilesThemes}
+                    optionLabel="name"
+                    value={tiles}
+                />
+            </div>
+            <div className="divider" />
             <h3>View</h3>
-            <span className="mr">Board view:</span>
-            <Button
-                label="Toggle"
-                icon="pi pi-arrows-v"
-                onClick={toggleViewBoardHandle}
-            />
-            <Divider />
+            <div className="view-formatter">
+                <span className="mr">Board view:</span>
+                <Button
+                    label="Toggle"
+                    icon="pi pi-arrows-v"
+                    onClick={toggleViewBoardHandle}
+                />
+            </div>
+            <div className="divider" />
             <h3>Label positions</h3>
-            <span className="mr">Row label:</span>
-            <Dropdown
-                onChange={setRowLabelHandle}
-                options={Object.keys(rowLabelPoses)}
-                value={rowLabelPos}
-            />
-            <br />
-            <span className="mr">Column label:</span>
-            <Dropdown
-                onChange={setColumnLabelHandle}
-                options={Object.keys(columnLabelPoses)}
-                value={columnLabelPos}
-            />
+            <div className="view-formatter">
+                <span className="mr">Row label:</span>
+                <Dropdown
+                    onChange={setRowLabelHandle}
+                    options={Object.keys(rowLabelPoses)}
+                    value={rowLabelPos}
+                />
+                <span className="mr">Column label:</span>
+                <Dropdown
+                    onChange={setColumnLabelHandle}
+                    options={Object.keys(columnLabelPoses)}
+                    value={columnLabelPos}
+                />
+            </div>
         </>
     )
 }
