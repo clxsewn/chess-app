@@ -29,10 +29,12 @@ export default function SettingsTab() {
 
     const setColumnLabelHandle = (e: DropdownChangeEvent) => {
         dispatch(setColumnLabelPos(e.value))
+        localStorage.setItem('columnLabelPos', e.value)
     }
 
     const setRowLabelHandle = (e: DropdownChangeEvent) => {
         dispatch(setRowLabelPos(e.value))
+        localStorage.setItem('rowLabelPos', e.value)
     }
 
     const toggleViewBoardHandle = () => {

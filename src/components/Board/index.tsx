@@ -5,8 +5,16 @@ import { useEffect, useRef } from 'react'
 import { Toast } from 'primereact/toast'
 import { isBlackTile } from '../../utils/helpers.ts'
 import { columnLabelPoses, rowLabelPoses } from '../../data/labelsPoses.ts'
+import { useDispatch } from 'react-redux'
+import {
+    setColumnLabelPos,
+    setRowLabelPos,
+    setTilesTheme,
+} from '../../store/reducers/appearanceSlice.ts'
+import tilesThemes from '../../data/boardThemes.ts'
 
 export default function Board() {
+    const dispatch = useDispatch()
     const boardRef = useRef<HTMLDivElement | null>(null)
     const toastCenter = useRef<Toast>(null)
 
@@ -64,7 +72,20 @@ export default function Board() {
         }
     })
 
-    useEffect(() => {})
+    useEffect(() => {
+        const rowLabelPos = localStorage.getItem('rowLabelPos')
+        if (rowLabelPos) dispatch(setRowLabelPos(rowLabelPos))
+
+        const columnLabelPos = localStorage.getItem('columnLabelPos')
+        if (columnLabelPos) dispatch(setColumnLabelPos(columnLabelPos))
+
+        const tilesTheme = localStorage.getItem('tilesTheme')
+        if (tilesTheme) {
+            dispatch(
+                setTilesTheme(tilesThemes.find((t) => t.name === tilesTheme))
+            )
+        }
+    })
 
     return (
         <div
