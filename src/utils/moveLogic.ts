@@ -51,6 +51,33 @@ function repeat(pos: TileID, direction: direction[], board: Board): TileID[] {
     return returnArr
 }
 
+// this function returns the real possibleMoves with CHECK validation (using in logic)
+export function strictGetPossibleMoves(board: Board, id: TileID): TileID[] {
+    const color = board[id]!.color
+    const kingPos = getKingPos(color, board)
+
+    const pm = getPossibleMoves(board, id)
+
+    const boardCopy = { ...board }
+    delete boardCopy[id]
+    const strictPossibleMoves: TileID[] = []
+
+    pm.forEach((m) => {
+        boardCopy[m] = board[id]
+
+        if (!isCheck(kingPos, boardCopy)) {
+            strictPossibleMoves.push(m)
+        } else {
+            console.log('CHECK ON', m)
+        }
+
+        delete boardCopy[m]
+    })
+
+    return strictPossibleMoves
+}
+
+// this function does not validate check (using to show possible moves to user)
 export function getPossibleMoves(board: Board, id: TileID): TileID[] {
     return [
         ...new Set(
@@ -173,22 +200,22 @@ function _getPossibleMoves(board: Board, id: TileID): TileID[] {
     }
 }
 
-export function isCheck(color: TColor, board: Board) {
+export function isCheck(kingPos: TileID, board: Board) {
     const allOppositePieces = Object.entries(board)
         .filter(([, value]) => {
-            return value.color !== color
+            return value.color !== board[kingPos]?.color
         })
         .map(([key]) => key) as TileID[]
 
-    for (const [key, value] of Object.entries(board)) {
-        if (value.piece === 'king' && value.color === color) {
-            return allOppositePieces.some((op) => {
-                return getPossibleMoves(board, op).includes(key as TileID)
-            })
-        }
-    }
+    return allOppositePieces.some((op) => {
+        return getPossibleMoves(board, op).includes(kingPos)
+    })
+}
 
-    return false
+export function getKingPos(color: TColor, board: Board): TileID {
+    return Object.entries(board).find(
+        ([, v]) => v.piece === 'king' && v.color === color
+    )![0] as TileID
 }
 
 export function getMoveNotation(
@@ -203,7 +230,8 @@ export function getMoveNotation(
 
     if (from.piece !== 'pawn') notation = pieceNotation[from.piece] + notation
     if (capture) notation = 'x' + notation
-    if (isCheck(opposite(from.color), board)) notation = notation + '+'
+    if (isCheck(getKingPos(opposite(from.color), board), board))
+        notation = notation + '+'
 
     return notation
 }

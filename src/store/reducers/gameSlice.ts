@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Board, TColor, TileID } from '../../types/Board.ts'
 import {
+    getKingPos,
     getMoveNotation,
     getPossibleMoves,
     isCheck,
+    strictGetPossibleMoves,
 } from '../../utils/moveLogic.ts'
 import { enPassant, opposite } from '../../utils/helpers.ts'
 
@@ -88,7 +90,10 @@ export const gameSlice = createSlice({
     reducers: {
         select: (state, action: PayloadAction<TileID>) => {
             state.selected = action.payload
-            state.possibleMoves = getPossibleMoves(state.board, action.payload)
+            state.possibleMoves = strictGetPossibleMoves(
+                state.board,
+                action.payload
+            )
         },
 
         unselect: (state) => {
@@ -138,7 +143,7 @@ export const gameSlice = createSlice({
                         capture
                     )
 
-                    if (!isCheck(turn, boardCopy)) {
+                    if (!isCheck(getKingPos(turn, boardCopy), boardCopy)) {
                         state.movesHistory.push({
                             id: moveCounter++,
                             move: notation,
