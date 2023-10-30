@@ -5,11 +5,18 @@ import {
     getMoveNotation,
     getPossibleMoves,
     isCheck,
+    isStalemate,
     strictGetPossibleMoves,
 } from '../../utils/moveLogic.ts'
 import { enPassant, opposite } from '../../utils/helpers.ts'
 
 type TColorOrNull = TColor | null
+
+export enum GameResult {
+    WhiteWon,
+    BlackWon,
+    Draw,
+}
 
 interface IMove {
     id: number
@@ -31,7 +38,7 @@ interface Game {
     lastMove: [TileID, TileID] | [null, null]
     turn: TColorOrNull
     gameStatus: GameStatus
-    winner: TColorOrNull
+    gameResult: GameResult | null
 }
 
 let moveCounter = 0
@@ -81,7 +88,7 @@ const initialState: Game = {
     possibleMoves: [],
     gameStatus: GameStatus.Waiting,
     turn: null,
-    winner: null,
+    gameResult: null,
 }
 
 export const gameSlice = createSlice({
@@ -148,8 +155,21 @@ export const gameSlice = createSlice({
                             id: moveCounter++,
                             move: notation,
                         })
+
                         state.lastMove = [fromId, toId]
                         state.board = boardCopy
+
+                        if (isStalemate(opposite(turn), boardCopy)) {
+                            gameSlice.caseReducers.end(state, {
+                                payload: {
+                                    result: GameResult.Draw,
+                                },
+                                type: '',
+                            })
+
+                            return state
+                        }
+
                         state.turn = opposite(turn)
                     }
                 }
@@ -166,16 +186,24 @@ export const gameSlice = createSlice({
             }
         },
 
-        end: (state, action: PayloadAction<{ winner: TColor }>) => {
+        end: (state, action: PayloadAction<{ result: GameResult }>) => {
             gameSlice.caseReducers.unselect(state)
+
+            const { result } = action.payload
+            const endgameNotation =
+                result === GameResult.WhiteWon
+                    ? '1-0'
+                    : result === GameResult.BlackWon
+                    ? '0-1'
+                    : '1-1'
 
             state.turn = null
             state.movesHistory.push({
                 id: moveCounter++,
-                move: action.payload.winner === 'white' ? '1-0' : '0-1',
+                move: endgameNotation,
             })
             state.gameStatus = GameStatus.Ended
-            state.winner = action.payload.winner
+            state.gameResult = result
         },
 
         discard: () => initialState,

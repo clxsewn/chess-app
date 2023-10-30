@@ -218,6 +218,19 @@ export function getKingPos(color: TColor, board: Board): TileID {
     )![0] as TileID
 }
 
+export function isStalemate(smFor: TColor, board: Board): boolean {
+    return (
+        !Object.entries(board)
+            .filter(([, value]) => {
+                return value.color === smFor
+            })
+            .map(([key]) => key)
+            .some((p) => {
+                return strictGetPossibleMoves(board, p as TileID).length
+            }) && !isCheck(getKingPos(smFor, board), board)
+    )
+}
+
 export function getMoveNotation(
     board: Board,
     from: TTile,
