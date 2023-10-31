@@ -12,6 +12,8 @@ import {
     setTilesTheme,
 } from '../../store/reducers/appearanceSlice.ts'
 import tilesThemes from '../../data/boardThemes.ts'
+import { GameResult } from '../../store/reducers/gameSlice.ts'
+import Game from '../Game'
 
 export default function Board() {
     const dispatch = useDispatch()
@@ -28,19 +30,26 @@ export default function Board() {
 
     const { view } = boardView
 
-    const { board, turn, selected, possibleMoves, lastMove, winner } =
+    const { board, turn, selected, possibleMoves, lastMove, gameResult } =
         useAppSelector((state) => state.game)
 
     useEffect(() => {
-        if (winner && toastCenter.current) {
+        if (gameResult !== null && toastCenter.current) {
+            const detail =
+                gameResult === GameResult.WhiteWon
+                    ? 'White wins!'
+                    : gameResult === GameResult.BlackWon
+                    ? 'Black wins!'
+                    : 'Draw'
+
             toastCenter.current.show({
                 severity: 'info',
                 summary: 'Game result',
-                detail: `${winner} wins!`,
+                detail: detail,
                 life: 5000,
             })
         }
-    }, [winner])
+    }, [gameResult])
 
     function _boardResize(asideWidth: number) {
         if (boardRef.current) {

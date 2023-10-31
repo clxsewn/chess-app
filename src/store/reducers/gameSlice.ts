@@ -5,6 +5,7 @@ import {
     getMoveNotation,
     getPossibleMoves,
     isCheck,
+    isCheckmate,
     isStalemate,
     strictGetPossibleMoves,
 } from '../../utils/moveLogic.ts'
@@ -163,6 +164,22 @@ export const gameSlice = createSlice({
                             gameSlice.caseReducers.end(state, {
                                 payload: {
                                     result: GameResult.Draw,
+                                },
+                                type: '',
+                            })
+
+                            return state
+                        }
+
+                        if (isCheckmate(opposite(turn), boardCopy)) {
+                            const gameResult =
+                                turn === 'white'
+                                    ? GameResult.WhiteWon
+                                    : GameResult.BlackWon
+
+                            gameSlice.caseReducers.end(state, {
+                                payload: {
+                                    result: gameResult,
                                 },
                                 type: '',
                             })

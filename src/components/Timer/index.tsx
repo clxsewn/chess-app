@@ -1,10 +1,16 @@
 import { useAppDispatch, useAppSelector } from '../../hooks.ts'
 import { useState } from 'react'
 import { useTimer } from 'react-timer-hook'
-import { end } from '../../store/reducers/gameSlice.ts'
+import { end, GameResult } from '../../store/reducers/gameSlice.ts'
 import { TColor } from '../../types/Board.ts'
 import './styles.scss'
 import { opposite } from '../../utils/helpers.ts'
+
+function getGameResultPayload(winner: TColor) {
+    return {
+        result: winner === 'white' ? GameResult.WhiteWon : GameResult.BlackWon,
+    }
+}
 
 export default function Timer({
     duration,
@@ -25,7 +31,7 @@ export default function Timer({
         expiryTimestamp: time,
         autoStart: false,
         onExpire: () => {
-            dispatch(end({ winner: opposite(forPlayer) }))
+            dispatch(end(getGameResultPayload(opposite(forPlayer))))
         },
     })
 

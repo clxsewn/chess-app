@@ -65,11 +65,7 @@ export function strictGetPossibleMoves(board: Board, id: TileID): TileID[] {
     pm.forEach((m) => {
         boardCopy[m] = board[id]
 
-        if (!isCheck(kingPos, boardCopy)) {
-            strictPossibleMoves.push(m)
-        } else {
-            console.log('CHECK ON', m)
-        }
+        if (!isCheck(kingPos, boardCopy)) strictPossibleMoves.push(m)
 
         delete boardCopy[m]
     })
@@ -228,6 +224,19 @@ export function isStalemate(smFor: TColor, board: Board): boolean {
             .some((p) => {
                 return strictGetPossibleMoves(board, p as TileID).length
             }) && !isCheck(getKingPos(smFor, board), board)
+    )
+}
+
+export function isCheckmate(cmFor: TColor, board: Board): boolean {
+    return (
+        !Object.entries(board)
+            .filter(([, value]) => {
+                return value.color === cmFor
+            })
+            .map(([key]) => key)
+            .some((p) => {
+                return strictGetPossibleMoves(board, p as TileID).length
+            }) && isCheck(getKingPos(cmFor, board), board)
     )
 }
 
