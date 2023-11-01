@@ -197,14 +197,11 @@ function _getPossibleMoves(board: Board, id: TileID): TileID[] {
 }
 
 export function isCheck(kingPos: TileID, board: Board) {
-    const allOppositePieces = Object.entries(board)
-        .filter(([, value]) => {
-            return value.color !== board[kingPos]?.color
-        })
-        .map(([key]) => key) as TileID[]
-
-    return allOppositePieces.some((op) => {
-        return getPossibleMoves(board, op).includes(kingPos)
+    return Object.entries(board).some(([key, value]) => {
+        return (
+            value.color !== board[kingPos]?.color &&
+            getPossibleMoves(board, key as TileID).includes(kingPos)
+        )
     })
 }
 
@@ -214,21 +211,7 @@ export function getKingPos(color: TColor, board: Board): TileID {
     )![0] as TileID
 }
 
-export function isStalemate(smFor: TColor, board: Board): boolean {
-    return (
-        !isHavePossibleMove(smFor, board) &&
-        !isCheck(getKingPos(smFor, board), board)
-    )
-}
-
-export function isCheckmate(cmFor: TColor, board: Board): boolean {
-    return (
-        !isHavePossibleMove(cmFor, board) &&
-        isCheck(getKingPos(cmFor, board), board)
-    )
-}
-
-function isHavePossibleMove(moveFor: TColor, board: Board): boolean {
+export function isExistPossibleMove(moveFor: TColor, board: Board): boolean {
     return Object.entries(board).some(([key, value]) => {
         return (
             value.color === moveFor &&

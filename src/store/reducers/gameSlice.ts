@@ -5,8 +5,7 @@ import {
     getMoveNotation,
     getPossibleMoves,
     isCheck,
-    isCheckmate,
-    isStalemate,
+    isExistPossibleMove,
     strictGetPossibleMoves,
 } from '../../utils/moveLogic.ts'
 import { enPassant, opposite } from '../../utils/helpers.ts'
@@ -159,35 +158,38 @@ export const gameSlice = createSlice({
 
                         state.lastMove = [fromId, toId]
                         state.board = boardCopy
+                        const opponent = opposite(turn)
 
-                        if (isStalemate(opposite(turn), boardCopy)) {
-                            gameSlice.caseReducers.end(state, {
-                                payload: {
-                                    result: GameResult.Draw,
-                                },
-                                type: '',
-                            })
+                        // Opponent can't move
+                        if (!isExistPossibleMove(opponent, boardCopy)) {
+                            if (
+                                !isCheck(
+                                    getKingPos(opponent, boardCopy),
+                                    boardCopy
+                                )
+                            ) {
+                                // Stalemate
+                                gameSlice.caseReducers.end(state, {
+                                    payload: {
+                                        result: GameResult.Draw,
+                                    },
+                                    type: '',
+                                })
+                            } else {
+                                // Checkmate
+                                const gameResult =
+                                    turn === 'white'
+                                        ? GameResult.WhiteWon
+                                        : GameResult.BlackWon
 
-                            return state
-                        }
-
-                        if (isCheckmate(opposite(turn), boardCopy)) {
-                            const gameResult =
-                                turn === 'white'
-                                    ? GameResult.WhiteWon
-                                    : GameResult.BlackWon
-
-                            gameSlice.caseReducers.end(state, {
-                                payload: {
-                                    result: gameResult,
-                                },
-                                type: '',
-                            })
-
-                            return state
-                        }
-
-                        state.turn = opposite(turn)
+                                gameSlice.caseReducers.end(state, {
+                                    payload: {
+                                        result: gameResult,
+                                    },
+                                    type: '',
+                                })
+                            }
+                        } else state.turn = opponent
                     }
                 }
             }
