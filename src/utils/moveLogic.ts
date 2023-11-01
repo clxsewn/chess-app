@@ -216,28 +216,25 @@ export function getKingPos(color: TColor, board: Board): TileID {
 
 export function isStalemate(smFor: TColor, board: Board): boolean {
     return (
-        !Object.entries(board)
-            .filter(([, value]) => {
-                return value.color === smFor
-            })
-            .map(([key]) => key)
-            .some((p) => {
-                return strictGetPossibleMoves(board, p as TileID).length
-            }) && !isCheck(getKingPos(smFor, board), board)
+        !isHavePossibleMove(smFor, board) &&
+        !isCheck(getKingPos(smFor, board), board)
     )
 }
 
 export function isCheckmate(cmFor: TColor, board: Board): boolean {
     return (
-        !Object.entries(board)
-            .filter(([, value]) => {
-                return value.color === cmFor
-            })
-            .map(([key]) => key)
-            .some((p) => {
-                return strictGetPossibleMoves(board, p as TileID).length
-            }) && isCheck(getKingPos(cmFor, board), board)
+        !isHavePossibleMove(cmFor, board) &&
+        isCheck(getKingPos(cmFor, board), board)
     )
+}
+
+function isHavePossibleMove(moveFor: TColor, board: Board): boolean {
+    return Object.entries(board).some(([key, value]) => {
+        return (
+            value.color === moveFor &&
+            strictGetPossibleMoves(board, key as TileID).length
+        )
+    })
 }
 
 export function getMoveNotation(
