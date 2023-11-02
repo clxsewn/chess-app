@@ -7,21 +7,24 @@ import { opposite } from '../../utils/helpers.ts'
 
 export default function Game() {
     const viewName = useAppSelector((state) => state.appearance.boardView.name)
-    const gameID = useAppSelector((state) => state.game.id)
+    const [gameID, initialTime] = useAppSelector((state) => [
+        state.game.id,
+        state.game.initialTime,
+    ])
     const bottomColor = viewName === 'Default' ? 'white' : 'black'
 
     return (
         <div className="game">
             <div className="board-wrapper">
                 <Timer
-                    duration={20}
-                    key={`${opposite(bottomColor)}${gameID}`}
+                    duration={initialTime}
+                    key={`${opposite(bottomColor)}${gameID}${initialTime}`}
                     forPlayer={opposite(bottomColor)}
                 />
                 <Board />
                 <Timer
-                    duration={20}
-                    key={`${bottomColor}${gameID}`}
+                    duration={initialTime}
+                    key={`${bottomColor}${gameID}${initialTime}`}
                     forPlayer={bottomColor}
                 />
             </div>

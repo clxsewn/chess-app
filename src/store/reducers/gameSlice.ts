@@ -12,6 +12,8 @@ import { enPassant, opposite } from '../../utils/helpers.ts'
 
 type TColorOrNull = TColor | null
 
+export const timeMarks = [60, 180, 300, 600, 1800]
+
 export enum GameResult {
     WhiteWon,
     BlackWon,
@@ -32,6 +34,7 @@ export enum GameStatus {
 interface Game {
     board: Board
     id: number
+    initialTime: number
     movesHistory: IMove[]
     selected: TileID | null
     possibleMoves: TileID[]
@@ -89,6 +92,7 @@ const initialState: Game = {
     gameStatus: GameStatus.Waiting,
     turn: null,
     gameResult: null,
+    initialTime: timeMarks[1],
 }
 
 export const gameSlice = createSlice({
@@ -225,9 +229,14 @@ export const gameSlice = createSlice({
             state.gameResult = result
         },
 
+        setTimeMark: (state, action: PayloadAction<number>) => {
+            state.initialTime = action.payload
+        },
+
         discard: () => initialState,
     },
 })
 
-export const { select, unselect, move, start, end, discard } = gameSlice.actions
+export const { select, unselect, move, start, end, setTimeMark, discard } =
+    gameSlice.actions
 export default gameSlice.reducer
