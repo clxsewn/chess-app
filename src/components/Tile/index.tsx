@@ -1,9 +1,10 @@
-import { DragEvent, useState } from 'react'
+import { CSSProperties, DragEvent, useState } from 'react'
 import { useAppDispatch } from '../../hooks.ts'
 import { move, select, unselect } from '../../store/reducers/gameSlice.ts'
 import './styles.scss'
 import { TileID } from '../../types/Board.ts'
 import { Color } from '../../types/Color.ts'
+import { TLabelMargins } from '../../store/reducers/appearanceSlice.ts'
 
 export default function Tile({
     id,
@@ -16,6 +17,7 @@ export default function Tile({
     drawRowLabel,
     drawColumnLabel,
     selected,
+    labelMargins,
 }: {
     id: TileID
     colors: [Color, Color]
@@ -27,6 +29,7 @@ export default function Tile({
     drawRowLabel: boolean
     drawColumnLabel: boolean
     selected: boolean
+    labelMargins: TLabelMargins
 }) {
     const [isMovingOver, setIsMovingOver] = useState(false)
 
@@ -90,8 +93,16 @@ export default function Tile({
                     style={{ backgroundColor: highlightColor }}
                 />
             )}
-            {drawRowLabel && <span className="str-symbol">{id[1]}</span>}
-            {drawColumnLabel && <span className="col-symbol">{id[0]}</span>}
+            {drawRowLabel && (
+                <span className="str-symbol" style={labelMargins.row}>
+                    {id[1]}
+                </span>
+            )}
+            {drawColumnLabel && (
+                <span className="col-symbol" style={labelMargins.column}>
+                    {id[0]}
+                </span>
+            )}
             {possible && (
                 <div
                     className={`possible ${piece ? 'capture' : ''}`}

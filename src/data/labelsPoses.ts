@@ -1,3 +1,5 @@
+import { CSSProperties } from 'react'
+
 interface IPoses {
     [name: string]: (id: number) => boolean
 }
@@ -19,3 +21,17 @@ export const columnLabelPoses: IPoses = {
 
 export const columnLabelPosList = Object.keys(columnLabelPoses)
 export type TColumnLabelPos = keyof typeof columnLabelPoses
+
+export const topLeft: CSSProperties = {
+    top: '10%',
+    left: '10%',
+    bottom: 'auto',
+    right: 'auto',
+}
+
+export const bottomRight: CSSProperties = {
+    bottom: '10%',
+    right: '10%',
+    top: 'auto',
+    left: 'auto',
+}

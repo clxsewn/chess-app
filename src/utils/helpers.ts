@@ -1,4 +1,7 @@
 import { TColor, TileID, TTile } from '../types/Board.ts'
+import { TColumnLabelPos, TRowLabelPos } from '../data/labelsPoses.ts'
+import { TSides } from '../store/reducers/appearanceSlice.ts'
+import { CSSProperties } from 'react'
 
 export function isBlackTile(id: string): boolean {
     return (id.charCodeAt(0) + parseInt(id[1])) % 2 === 0

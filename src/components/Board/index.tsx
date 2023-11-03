@@ -13,15 +13,20 @@ import {
 } from '../../store/reducers/appearanceSlice.ts'
 import tilesThemes from '../../data/boardThemes.ts'
 import { GameResult } from '../../store/reducers/gameSlice.ts'
-import Game from '../Game'
 
 export default function Board() {
     const dispatch = useDispatch()
     const boardRef = useRef<HTMLDivElement | null>(null)
     const toastCenter = useRef<Toast>(null)
 
-    const { tiles, pieces, boardView, rowLabelPos, columnLabelPos } =
-        useAppSelector((state) => state.appearance)
+    const {
+        tiles,
+        pieces,
+        boardView,
+        rowLabelPos,
+        columnLabelPos,
+        labelMargins,
+    } = useAppSelector((state) => state.appearance)
 
     const [rh, ch] = [
         rowLabelPoses[rowLabelPos],
@@ -124,6 +129,7 @@ export default function Board() {
                     drawRowLabel={rh(vID)}
                     drawColumnLabel={ch(vID)}
                     selected={t === selected}
+                    labelMargins={labelMargins}
                 />
             ))}
 

@@ -7,13 +7,21 @@ import {
 } from '../../data/piecesThemes.ts'
 import { possibleViews } from '../../data/boardViews.ts'
 import {
+    bottomRight,
     columnLabelPoses,
     rowLabelPoses,
     TColumnLabelPos,
+    topLeft,
     TRowLabelPos,
 } from '../../data/labelsPoses.ts'
 import { IBoardView } from '../../types/BoardView.ts'
 import { Colors, Theme } from '../../types/Theme.ts'
+import { CSSProperties } from 'react'
+
+export interface TLabelMargins {
+    row: CSSProperties
+    column: CSSProperties
+}
 
 interface TAppearance {
     boardView: IBoardView
@@ -21,6 +29,7 @@ interface TAppearance {
     pieces: Theme<Colors<IPieces>>
     rowLabelPos: TRowLabelPos
     columnLabelPos: TColumnLabelPos
+    labelMargins: TLabelMargins
 }
 
 const initialState: TAppearance = {
@@ -29,6 +38,10 @@ const initialState: TAppearance = {
     pieces: defaultPiecesTheme,
     rowLabelPos: 'Left',
     columnLabelPos: 'Bottom',
+    labelMargins: {
+        row: topLeft,
+        column: bottomRight,
+    },
 }
 
 export const appearanceSlice = createSlice({
@@ -41,16 +54,20 @@ export const appearanceSlice = createSlice({
                     ? possibleViews[1]
                     : possibleViews[0]
         },
+
         setTilesTheme: (state, action) => {
             state.tiles = action.payload
         },
+
         setPiecesTheme: (state, action) => {
             state.pieces = piecesThemes[action.payload.id]
         },
+
         setRowLabelPos: (state, action: PayloadAction<TRowLabelPos>) => {
             if (rowLabelPoses[action.payload])
                 state.rowLabelPos = action.payload
         },
+
         setColumnLabelPos: (state, action: PayloadAction<TColumnLabelPos>) => {
             if (columnLabelPoses[action.payload])
                 state.columnLabelPos = action.payload
@@ -60,7 +77,6 @@ export const appearanceSlice = createSlice({
 
 export const {
     setTilesTheme,
-    setPiecesTheme,
     toggleBoardView,
     setRowLabelPos,
     setColumnLabelPos,
