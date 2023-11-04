@@ -29,9 +29,23 @@ export const topLeft: CSSProperties = {
     right: 'auto',
 }
 
+export const topRight: CSSProperties = {
+    top: '10%',
+    right: '10%',
+    bottom: 'auto',
+    left: 'auto',
+}
+
 export const bottomRight: CSSProperties = {
     bottom: '10%',
     right: '10%',
     top: 'auto',
     left: 'auto',
+}
+
+export const bottomLeft: CSSProperties = {
+    bottom: '10%',
+    left: '10%',
+    top: 'auto',
+    right: 'auto',
 }

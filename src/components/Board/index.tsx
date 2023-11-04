@@ -3,7 +3,7 @@ import './styles.scss'
 import { useAppSelector } from '../../hooks.ts'
 import { useEffect, useRef } from 'react'
 import { Toast } from 'primereact/toast'
-import { isBlackTile } from '../../utils/helpers.ts'
+import { getLabelInnerPos, isBlackTile } from '../../utils/helpers.ts'
 import { columnLabelPoses, rowLabelPoses } from '../../data/labelsPoses.ts'
 import { useDispatch } from 'react-redux'
 import {
@@ -19,14 +19,10 @@ export default function Board() {
     const boardRef = useRef<HTMLDivElement | null>(null)
     const toastCenter = useRef<Toast>(null)
 
-    const {
-        tiles,
-        pieces,
-        boardView,
-        rowLabelPos,
-        columnLabelPos,
-        labelMargins,
-    } = useAppSelector((state) => state.appearance)
+    const { tiles, pieces, boardView, rowLabelPos, columnLabelPos } =
+        useAppSelector((state) => state.appearance)
+
+    const labelMargins = getLabelInnerPos(rowLabelPos, columnLabelPos)
 
     const [rh, ch] = [
         rowLabelPoses[rowLabelPos],

@@ -7,11 +7,9 @@ import {
 } from '../../data/piecesThemes.ts'
 import { possibleViews } from '../../data/boardViews.ts'
 import {
-    bottomRight,
     columnLabelPoses,
     rowLabelPoses,
     TColumnLabelPos,
-    topLeft,
     TRowLabelPos,
 } from '../../data/labelsPoses.ts'
 import { IBoardView } from '../../types/BoardView.ts'
@@ -29,7 +27,6 @@ interface TAppearance {
     pieces: Theme<Colors<IPieces>>
     rowLabelPos: TRowLabelPos
     columnLabelPos: TColumnLabelPos
-    labelMargins: TLabelMargins
 }
 
 const initialState: TAppearance = {
@@ -38,10 +35,6 @@ const initialState: TAppearance = {
     pieces: defaultPiecesTheme,
     rowLabelPos: 'Left',
     columnLabelPos: 'Bottom',
-    labelMargins: {
-        row: topLeft,
-        column: bottomRight,
-    },
 }
 
 export const appearanceSlice = createSlice({
