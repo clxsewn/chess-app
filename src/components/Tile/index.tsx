@@ -1,4 +1,4 @@
-import { CSSProperties, DragEvent, useState } from 'react'
+import { DragEvent, useState } from 'react'
 import { useAppDispatch } from '../../hooks.ts'
 import { move, select, unselect } from '../../store/reducers/gameSlice.ts'
 import './styles.scss'

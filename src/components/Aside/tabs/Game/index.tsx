@@ -31,11 +31,15 @@ export default function GameTab() {
                 ></Button>
             ) : (
                 <>
-                    <Dropdown
-                        options={timeMarks}
-                        value={initialTime}
-                        onChange={selectTimeMarkHandler}
-                    />
+                    <div className="view-formatter">
+                        <span className="mr">Time:</span>
+                        <Dropdown
+                            options={timeMarks}
+                            value={initialTime}
+                            onChange={selectTimeMarkHandler}
+                        />
+                    </div>
+                    <div className="divider" />
                     <Button label="New game" onClick={startButtonHandler} />
                 </>
             )}

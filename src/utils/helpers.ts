@@ -36,13 +36,13 @@ export function getLabelInnerPos(
     if (rlp === 'Left') {
         if (clp === 'Top') {
             return {
-                column: topRight,
                 row: bottomLeft,
+                column: topRight,
             }
         } else if (clp === 'Bottom') {
             return {
-                column: bottomRight,
                 row: topLeft,
+                column: bottomRight,
             }
         } else if (clp === 'None') {
             return {
@@ -53,13 +53,13 @@ export function getLabelInnerPos(
     } else if (rlp === 'Right') {
         if (clp === 'Top') {
             return {
-                column: topLeft,
                 row: bottomRight,
+                column: topLeft,
             }
         } else if (clp === 'Bottom') {
             return {
-                column: bottomLeft,
                 row: topRight,
+                column: bottomLeft,
             }
         } else if (clp === 'None') {
             return {
@@ -70,13 +70,13 @@ export function getLabelInnerPos(
     } else if (rlp === 'None') {
         if (clp === 'Top') {
             return {
-                column: topLeft,
                 row: {},
+                column: topLeft,
             }
         } else if (clp === 'Bottom') {
             return {
-                column: bottomLeft,
                 row: {},
+                column: bottomLeft,
             }
         } else if (clp === 'None') {
             return {
@@ -84,9 +84,9 @@ export function getLabelInnerPos(
                 column: {},
             }
         }
-    } else
-        return {
-            row: {},
-            column: {},
-        }
+    }
+    return {
+        row: {},
+        column: {},
+    }
 }
