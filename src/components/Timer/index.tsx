@@ -27,7 +27,7 @@ export default function Timer({
     const time = new Date()
     time.setSeconds(time.getSeconds() + duration)
 
-    const { seconds, minutes, resume, pause } = useTimer({
+    const { totalSeconds, seconds, minutes, resume, pause } = useTimer({
         expiryTimestamp: time,
         autoStart: false,
         onExpire: () => {
@@ -47,7 +47,7 @@ export default function Timer({
     const isActive = turn === forPlayer
 
     const activeClass = isActive ? ' active' : ''
-    const animatedClass = seconds < 15 && isActive ? ' danger-time' : ''
+    const animatedClass = totalSeconds < 15 && isActive ? ' danger-time' : ''
 
     return (
         <div className={`timer ${forPlayer + activeClass + animatedClass}`}>
