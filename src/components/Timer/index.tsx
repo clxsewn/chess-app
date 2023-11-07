@@ -45,12 +45,11 @@ export default function Timer({
     }
 
     const isActive = turn === forPlayer
-
     const activeClass = isActive ? ' active' : ''
-    const animatedClass = totalSeconds < 15 && isActive ? ' danger-time' : ''
+    const dangerTimeClass = totalSeconds < 15 && isActive ? ' danger-time' : ''
 
     return (
-        <div className={`timer ${forPlayer + activeClass + animatedClass}`}>
+        <div className={`timer ${forPlayer + activeClass + dangerTimeClass}`}>
             <div>{isActive && <i className="pi pi-stopwatch"></i>}</div>
             <span className="time">
                 <span className="digit">{Math.floor(minutes / 10)}</span>

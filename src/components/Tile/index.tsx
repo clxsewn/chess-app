@@ -72,9 +72,13 @@ export default function Tile({
         } else dispatch(select(id))
     }
 
+    const highlightedClass = highlighted ? ' highlighted' : ''
+    const capturedClass = piece ? ' capture' : ''
+    const selectedClass = selected ? ' selected' : ''
+
     return (
         <div
-            className={`tile${highlighted ? ' highlighted' : ''}`}
+            className={`tile${highlightedClass}`}
             style={{
                 backgroundColor: colors[0],
                 color: colors[1],
@@ -105,7 +109,7 @@ export default function Tile({
             )}
             {possible && (
                 <div
-                    className={`possible ${piece ? 'capture' : ''}`}
+                    className={`possible${capturedClass}`}
                     style={{ backgroundColor: highlightColor }}
                 >
                     <div
@@ -117,7 +121,7 @@ export default function Tile({
             {piece && (
                 <img
                     src={piece}
-                    className={`piece${selected ? ' selected' : ''}`}
+                    className={`piece${selectedClass}`}
                     draggable={movable}
                     onDragStart={(e) => dragStartHandler(e, id)}
                 />

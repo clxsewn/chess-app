@@ -14,6 +14,8 @@ import {
 import tilesThemes from '../../data/boardThemes.ts'
 import { GameResult } from '../../store/reducers/gameSlice.ts'
 
+const ASIDE_WIDTH = 330 // px
+
 export default function Board() {
     const dispatch = useDispatch()
     const boardRef = useRef<HTMLDivElement | null>(null)
@@ -68,7 +70,7 @@ export default function Board() {
     function boardResize() {
         if (window.innerWidth < 980) {
             _boardResize(0)
-        } else _boardResize(330)
+        } else _boardResize(ASIDE_WIDTH)
     }
 
     useEffect(() => {
@@ -97,11 +99,10 @@ export default function Board() {
         }
     })
 
+    const selectedClass = selected ? ' tile-selected' : ''
+
     return (
-        <div
-            className={`board${selected ? ' tile-selected' : ''}`}
-            ref={boardRef}
-        >
+        <div className={`board${selectedClass}`} ref={boardRef}>
             {view.map((t, vID) => (
                 <Tile
                     key={t}
