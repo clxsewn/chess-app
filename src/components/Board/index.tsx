@@ -103,32 +103,36 @@ export default function Board() {
 
     return (
         <div className={`board${selectedClass}`} ref={boardRef}>
-            {view.map((t, vID) => (
-                <Tile
-                    key={t}
-                    id={t}
-                    colors={
-                        isBlackTile(t)
-                            ? [tiles.theme.black, tiles.theme.white]
-                            : [tiles.theme.white, tiles.theme.black]
-                    }
-                    piece={
-                        t in board
-                            ? pieces.theme[board[t]!.color][board[t]!.piece]
-                            : undefined
-                    }
-                    movable={board[t]?.color === turn}
-                    highlighted={
-                        selected === t || lastMove[0] === t || lastMove[1] === t
-                    }
-                    highlightColor={tiles.theme.highlight}
-                    possible={possibleMoves.includes(t)}
-                    drawRowLabel={rh(vID)}
-                    drawColumnLabel={ch(vID)}
-                    selected={t === selected}
-                    labelMargins={labelMargins}
-                />
-            ))}
+            {view.map((v) =>
+                v.map((t, vID) => (
+                    <Tile
+                        key={t}
+                        id={t}
+                        colors={
+                            isBlackTile(t)
+                                ? [tiles.theme.black, tiles.theme.white]
+                                : [tiles.theme.white, tiles.theme.black]
+                        }
+                        piece={
+                            t in board
+                                ? pieces.theme[board[t]!.color][board[t]!.piece]
+                                : undefined
+                        }
+                        movable={board[t]?.color === turn}
+                        highlighted={
+                            selected === t ||
+                            lastMove[0] === t ||
+                            lastMove[1] === t
+                        }
+                        highlightColor={tiles.theme.highlight}
+                        possible={possibleMoves.includes(t)}
+                        drawRowLabel={rh(vID)}
+                        drawColumnLabel={ch(vID)}
+                        selected={t === selected}
+                        labelMargins={labelMargins}
+                    />
+                ))
+            )}
 
             <Toast ref={toastCenter} position="center" />
         </div>
