@@ -11,10 +11,7 @@ import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 
 export default function GameTab() {
     const dispatch = useAppDispatch()
-    const [gameStatus, initialTime] = useAppSelector((state) => [
-        state.game.gameStatus,
-        state.game.initialTime,
-    ])
+    const { gameStatus, initialTime } = useAppSelector((state) => state.game)
 
     const startButtonHandler = () => dispatch(start())
     const discardButtonHandler = () => dispatch(discard())

@@ -7,10 +7,7 @@ import { opposite } from '../../utils/helpers.ts'
 
 export default function Game() {
     const viewName = useAppSelector((state) => state.appearance.boardView.name)
-    const [gameID, initialTime] = useAppSelector((state) => [
-        state.game.id,
-        state.game.initialTime,
-    ])
+    const { id, initialTime } = useAppSelector((state) => state.game)
     const bottomColor = viewName === 'Default' ? 'white' : 'black'
 
     return (
@@ -18,13 +15,13 @@ export default function Game() {
             <div className="board-wrapper">
                 <Timer
                     duration={initialTime}
-                    key={`${opposite(bottomColor)}${gameID}${initialTime}`}
+                    key={`${opposite(bottomColor)}${id}${initialTime}`}
                     forPlayer={opposite(bottomColor)}
                 />
                 <Board />
                 <Timer
                     duration={initialTime}
-                    key={`${bottomColor}${gameID}${initialTime}`}
+                    key={`${bottomColor}${id}${initialTime}`}
                     forPlayer={bottomColor}
                 />
             </div>
