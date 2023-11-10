@@ -23,10 +23,8 @@ export default function Board() {
 
     const labelMargins = getLabelInnerPos(rowLabelPos, columnLabelPos)
 
-    const [rh, ch] = [
-        rowLabelPoses[rowLabelPos],
-        columnLabelPoses[columnLabelPos],
-    ]
+    const rh = rowLabelPoses[rowLabelPos]
+    const ch = columnLabelPoses[columnLabelPos]
 
     const { view } = boardView
 
@@ -99,8 +97,8 @@ export default function Board() {
 
     return (
         <div className={`board${selectedClass}`} ref={boardRef}>
-            {view.map((v) =>
-                v.map((t, vID) => (
+            {view.map((v, rID) =>
+                v.map((t, cID) => (
                     <Tile
                         key={t}
                         id={t}
@@ -122,8 +120,8 @@ export default function Board() {
                         }
                         highlightColor={tiles.theme.highlight}
                         possible={possibleMoves.includes(t)}
-                        drawRowLabel={rh(vID)}
-                        drawColumnLabel={ch(vID)}
+                        drawRowLabel={rh(cID)}
+                        drawColumnLabel={ch(rID)}
                         selected={t === selected}
                         labelMargins={labelMargins}
                     />
