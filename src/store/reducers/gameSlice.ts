@@ -12,8 +12,6 @@ import { enPassant, opposite } from '../../utils/helpers.ts'
 
 type TColorOrNull = TColor | null
 
-export const timeMarks = [60, 180, 300, 600, 1800]
-
 export enum GameResult {
     WhiteWon,
     BlackWon,
