@@ -16,7 +16,7 @@ export default function GameTab() {
     const startButtonHandler = () => dispatch(start())
     const discardButtonHandler = () => dispatch(discard())
     const selectTimeMarkHandler = (e: DropdownChangeEvent) =>
-        dispatch(setTimeMark(e.value.seconds))
+        dispatch(setTimeMark(e.value))
 
     return (
         <>

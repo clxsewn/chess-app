@@ -9,6 +9,7 @@ import {
     strictGetPossibleMoves,
 } from '../../utils/moveLogic.ts'
 import { enPassant, opposite } from '../../utils/helpers.ts'
+import { ITimeVariant, timeVariants } from '../../data/timeVariants.ts'
 
 type TColorOrNull = TColor | null
 
@@ -32,7 +33,7 @@ export enum GameStatus {
 interface Game {
     board: Board
     id: number
-    initialTime: number
+    initialTime: ITimeVariant
     movesHistory: IMove[]
     selected: TileID | null
     possibleMoves: TileID[]
@@ -90,7 +91,7 @@ const initialState: Game = {
     gameStatus: GameStatus.Waiting,
     turn: null,
     gameResult: null,
-    initialTime: timeMarks[1],
+    initialTime: timeVariants[1],
 }
 
 export const gameSlice = createSlice({
@@ -201,6 +202,7 @@ export const gameSlice = createSlice({
         start: (state) => {
             return {
                 ...initialState,
+                initialTime: state.initialTime,
                 turn: 'white',
                 gameStatus: GameStatus.Started,
                 id: state.id + 1,
@@ -227,11 +229,16 @@ export const gameSlice = createSlice({
             state.gameResult = result
         },
 
-        setTimeMark: (state, action: PayloadAction<number>) => {
+        setTimeMark: (state, action: PayloadAction<ITimeVariant>) => {
             state.initialTime = action.payload
         },
 
-        discard: () => initialState,
+        discard: (state) => {
+            return {
+                ...initialState,
+                initialTime: state.initialTime,
+            }
+        },
     },
 })
 

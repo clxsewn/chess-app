@@ -1,4 +1,4 @@
-interface ITimeVariant {
+export interface ITimeVariant {
     title: string
     seconds: number
 }
