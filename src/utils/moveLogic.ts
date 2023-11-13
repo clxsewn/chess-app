@@ -52,7 +52,7 @@ function repeat(pos: TileID, direction: direction[], board: Board): TileID[] {
 }
 
 // this function returns the real possibleMoves with CHECK validation (using in logic)
-export function strictGetPossibleMoves(board: Board, id: TileID): TileID[] {
+function strictGetPossibleMoves(board: Board, id: TileID): TileID[] {
     const color = board[id]!.color
     const kingPos = getKingPos(color, board)
 

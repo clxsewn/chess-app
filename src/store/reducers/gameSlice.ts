@@ -6,7 +6,6 @@ import {
     getPossibleMoves,
     isCheck,
     isExistPossibleMove,
-    strictGetPossibleMoves,
 } from '../../utils/moveLogic.ts'
 import { enPassant, opposite } from '../../utils/helpers.ts'
 import { ITimeVariant, timeVariants } from '../../data/timeVariants.ts'
@@ -100,10 +99,7 @@ export const gameSlice = createSlice({
     reducers: {
         select: (state, action: PayloadAction<TileID>) => {
             state.selected = action.payload
-            state.possibleMoves = strictGetPossibleMoves(
-                state.board,
-                action.payload
-            )
+            state.possibleMoves = getPossibleMoves(state.board, action.payload)
         },
 
         unselect: (state) => {

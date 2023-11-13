@@ -12,16 +12,16 @@ import nb1 from '../assets/piecesSet1/nb.svg'
 import pb1 from '../assets/piecesSet1/pb.svg'
 import { Colors, Themes } from '../types/Theme.ts'
 
-export interface IPieces {
-    king: string
-    queen: string
-    rook: string
-    bishop: string
-    knight: string
-    pawn: string
+export interface IPieces<T> {
+    king: T
+    queen: T
+    rook: T
+    bishop: T
+    knight: T
+    pawn: T
 }
 
-export type IPiecesThemes = Themes<Colors<IPieces>>
+export type IPiecesThemes = Themes<Colors<IPieces<string>>>
 
 export const piecesThemes: IPiecesThemes = [
     {
