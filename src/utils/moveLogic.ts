@@ -27,25 +27,26 @@ export function mov(pos: TileID, moves: direction[]): TileID {
         }
     }, pos)
 
-    return correctTileId(resultPos) ? (resultPos as TileID) : pos
+    return (correctTileId(resultPos) ? resultPos : pos) as TileID
 }
 
 function repeat(pos: TileID, direction: direction[], board: Board): TileID[] {
     const returnArr: TileID[] = []
     let currentPos = pos
+    let nextPos = mov(currentPos, direction)
 
-    const color = board[pos]?.color
+    const color = board[pos]!.color
 
-    for (let i = 0; i < 8; i++) {
-        currentPos = mov(currentPos, direction)
-        if (correctTileId(currentPos)) {
-            if (!(currentPos in board)) {
-                returnArr.push(currentPos)
-            } else if (board[currentPos]?.color !== color) {
-                returnArr.push(currentPos)
-                return returnArr
-            } else return returnArr
-        } else return returnArr
+    while (currentPos !== nextPos) {
+        if (!(nextPos in board)) returnArr.push(nextPos)
+        else {
+            if (board[nextPos]!.color !== color) returnArr.push(nextPos)
+
+            break
+        }
+
+        currentPos = nextPos
+        nextPos = mov(currentPos, direction)
     }
 
     return returnArr
@@ -78,7 +79,7 @@ export function getPossibleMoves(board: Board, id: TileID): TileID[] {
     return [
         ...new Set(
             _getPossibleMoves(board, id).filter(
-                (m) => !(m in board) || board[m]?.color !== board[id]?.color
+                (m) => !(m in board) || board[m]!.color !== board[id]!.color
             )
         ),
     ]
@@ -173,7 +174,7 @@ function _getPossibleMoves(board: Board, id: TileID): TileID[] {
                 if (
                     !(mov(id, ['right']) in board) &&
                     !(mov(id, ['right', 'right']) in board) &&
-                    board[mov(id, ['right', 'right', 'right'])]?.piece ===
+                    board[mov(id, ['right', 'right', 'right'])]!.piece ===
                         'rook'
                 ) {
                     mv.push(mov(id, ['right', 'right']))
@@ -199,7 +200,7 @@ function _getPossibleMoves(board: Board, id: TileID): TileID[] {
 export function isCheck(kingPos: TileID, board: Board) {
     return Object.entries(board).some(([key, value]) => {
         return (
-            value.color !== board[kingPos]?.color &&
+            value.color !== board[kingPos]!.color &&
             getPossibleMoves(board, key as TileID).includes(kingPos)
         )
     })
