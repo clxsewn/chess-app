@@ -1,6 +1,7 @@
 import {
     setColumnLabelPos,
     setRowLabelPos,
+    setTilesTheme,
 } from '../store/reducers/appearanceSlice.ts'
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 
@@ -17,5 +18,9 @@ export const LSRecords: LSRec[] = [
     {
         key: 'columnLabelPos',
         actionCreator: setColumnLabelPos,
+    },
+    {
+        key: 'tilesTheme',
+        actionCreator: setTilesTheme,
     },
 ]

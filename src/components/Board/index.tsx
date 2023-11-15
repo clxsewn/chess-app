@@ -6,8 +6,6 @@ import { Toast } from 'primereact/toast'
 import { getLabelInnerPos, isBlackTile } from '../../utils/helpers.ts'
 import { columnLabelPoses, rowLabelPoses } from '../../data/labelsPoses.ts'
 import { useDispatch } from 'react-redux'
-import { setTilesTheme } from '../../store/reducers/appearanceSlice.ts'
-import tilesThemes from '../../data/boardThemes.ts'
 import { GameResult } from '../../store/reducers/gameSlice.ts'
 import { LSRecords } from '../../data/localStorage.ts'
 
@@ -84,13 +82,6 @@ export default function Board() {
             const data = localStorage.getItem(r.key)
             if (data) dispatch(r.actionCreator(data))
         })
-
-        const tilesTheme = localStorage.getItem('tilesTheme')
-        if (tilesTheme) {
-            dispatch(
-                setTilesTheme(tilesThemes.find((t) => t.name === tilesTheme))
-            )
-        }
     })
 
     const selectedClass = selected ? ' tile-selected' : ''

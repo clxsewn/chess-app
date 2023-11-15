@@ -23,7 +23,7 @@ export default function SettingsTab() {
     )
 
     const setTilesThemeHandler = (e: DropdownChangeEvent) => {
-        dispatch(setTilesTheme(e.value))
+        dispatch(setTilesTheme(e.value.name))
         localStorage.setItem('tilesTheme', e.value.name)
     }
 

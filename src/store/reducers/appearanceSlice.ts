@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { defaultBoardTheme, IBoardTheme } from '../../data/boardThemes.ts'
+import {
+    defaultBoardTheme,
+    IBoardTheme,
+    tilesThemes,
+} from '../../data/boardThemes.ts'
 import {
     defaultPiecesTheme,
     IPieces,
@@ -24,7 +28,7 @@ export interface TLabelMargins {
 interface TAppearance {
     boardView: IBoardView
     tiles: IBoardTheme
-    pieces: Theme<Colors<IPieces>>
+    pieces: Theme<Colors<IPieces<string>>>
     rowLabelPos: TRowLabelPos
     columnLabelPos: TColumnLabelPos
 }
@@ -48,8 +52,9 @@ export const appearanceSlice = createSlice({
                     : possibleViews[0]
         },
 
-        setTilesTheme: (state, action) => {
-            state.tiles = action.payload
+        setTilesTheme: (state, action: PayloadAction<string>) => {
+            const theme = tilesThemes.find((t) => t.name === action.payload)
+            if (theme) state.tiles = theme
         },
 
         setPiecesTheme: (state, action) => {
