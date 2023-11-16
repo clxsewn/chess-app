@@ -2,19 +2,17 @@ import Tile from '../Tile'
 import './styles.scss'
 import { useAppSelector } from '../../hooks.ts'
 import { useEffect, useRef } from 'react'
-import { Toast } from 'primereact/toast'
 import { getLabelInnerPos, isBlackTile } from '../../utils/helpers.ts'
 import { columnLabelPoses, rowLabelPoses } from '../../data/labelsPoses.ts'
 import { useDispatch } from 'react-redux'
-import { GameResult } from '../../store/reducers/gameSlice.ts'
 import { LSRecords } from '../../data/localStorage.ts'
+import EndgameToast from '../EndgameToast'
 
 const ASIDE_WIDTH = 330 // px
 
 export default function Board() {
     const dispatch = useDispatch()
     const boardRef = useRef<HTMLDivElement | null>(null)
-    const toastCenter = useRef<Toast>(null)
 
     const { tiles, pieces, boardView, rowLabelPos, columnLabelPos } =
         useAppSelector((state) => state.appearance)
@@ -26,26 +24,9 @@ export default function Board() {
 
     const { view } = boardView
 
-    const { board, turn, selected, possibleMoves, lastMove, gameResult } =
-        useAppSelector((state) => state.game)
-
-    useEffect(() => {
-        if (gameResult !== null && toastCenter.current) {
-            const detail =
-                gameResult === GameResult.WhiteWon
-                    ? 'White wins!'
-                    : gameResult === GameResult.BlackWon
-                    ? 'Black wins!'
-                    : 'Draw'
-
-            toastCenter.current.show({
-                severity: 'info',
-                summary: 'Game result',
-                detail: detail,
-                life: 5000,
-            })
-        }
-    }, [gameResult])
+    const { board, turn, selected, possibleMoves, lastMove } = useAppSelector(
+        (state) => state.game
+    )
 
     function _boardResize(asideWidth: number) {
         if (boardRef.current) {
@@ -119,7 +100,7 @@ export default function Board() {
                 ))
             )}
 
-            <Toast ref={toastCenter} position="center" />
+            <EndgameToast />
         </div>
     )
 }
