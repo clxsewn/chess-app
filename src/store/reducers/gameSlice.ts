@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Board, TColor, TileID } from '../../types/Board.ts'
+import { Board, TColor, TileID, TTile } from '../../types/Board.ts'
 import {
     getKingPos,
     getMoveNotation,
@@ -111,7 +111,6 @@ export const gameSlice = createSlice({
             state,
             action: PayloadAction<{ from: TileID | 'selected'; to: TileID }>
         ) => {
-            const { board, turn } = state
             const fromId =
                 action.payload.from === 'selected'
                     ? state.selected
@@ -119,7 +118,7 @@ export const gameSlice = createSlice({
 
             if (fromId === null) return state
 
-            const from = board[fromId]
+            const from: TTile = { ...state.board[fromId]! }
             const toId = action.payload.to
 
             const boardCopy = { ...state.board }
@@ -127,7 +126,7 @@ export const gameSlice = createSlice({
             if (
                 from &&
                 fromId !== toId &&
-                from?.color === turn &&
+                from?.color === state.turn &&
                 state.gameStatus === GameStatus.Started
             ) {
                 const possibleMoves = getPossibleMoves(boardCopy, fromId)
@@ -149,7 +148,9 @@ export const gameSlice = createSlice({
                         capture
                     )
 
-                    if (!isCheck(getKingPos(turn, boardCopy), boardCopy)) {
+                    if (
+                        !isCheck(getKingPos(state.turn, boardCopy), boardCopy)
+                    ) {
                         state.movesHistory.push({
                             id: moveCounter++,
                             move: notation,
@@ -157,7 +158,7 @@ export const gameSlice = createSlice({
 
                         state.lastMove = [fromId, toId]
                         state.board = boardCopy
-                        const opponent = opposite(turn)
+                        const opponent = opposite(state.turn)
 
                         // Opponent can't move
                         if (!isExistPossibleMove(opponent, boardCopy)) {
@@ -177,7 +178,7 @@ export const gameSlice = createSlice({
                             } else {
                                 // Checkmate
                                 const gameResult =
-                                    turn === 'white'
+                                    state.turn === 'white'
                                         ? GameResult.WhiteWon
                                         : GameResult.BlackWon
 
@@ -233,6 +234,7 @@ export const gameSlice = createSlice({
             return {
                 ...initialState,
                 initialTime: state.initialTime,
+                id: state.id,
             }
         },
     },
