@@ -5,6 +5,8 @@ import './styles.scss'
 import { TileID } from '../../types/Board.ts'
 import { Color } from '../../types/Color.ts'
 import { TLabelMargins } from '../../store/reducers/appearanceSlice.ts'
+import useSound from 'use-sound'
+import moveSfx from '../../assets/sounds/move-self.mp3'
 
 export default function Tile({
     id,
@@ -35,6 +37,8 @@ export default function Tile({
 
     const dispatch = useAppDispatch()
 
+    const [play] = useSound(moveSfx)
+
     function dragStartHandler(e: DragEvent, id: TileID) {
         dispatch(select(id))
         e.dataTransfer.effectAllowed = 'linkMove'
@@ -62,6 +66,7 @@ export default function Tile({
         dispatch(
             move({ from: e.dataTransfer.getData('startId') as TileID, to: id })
         )
+        play()
     }
 
     function onClickHandler(id: TileID) {

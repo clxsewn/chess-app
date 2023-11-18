@@ -173,7 +173,7 @@ export const gameSlice = createSlice({
                                     payload: {
                                         result: GameResult.Draw,
                                     },
-                                    type: '',
+                                    type: 'end',
                                 })
                             } else {
                                 // Checkmate
@@ -186,7 +186,7 @@ export const gameSlice = createSlice({
                                     payload: {
                                         result: gameResult,
                                     },
-                                    type: '',
+                                    type: 'end',
                                 })
                             }
                         } else state.turn = opponent
