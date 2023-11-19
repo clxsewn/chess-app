@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks.ts'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { useTimer } from 'react-timer-hook'
 import { end, GameResult } from '../../store/reducers/gameSlice.ts'
 import { TColor } from '../../types/Board.ts'
@@ -22,8 +22,6 @@ export default function Timer({
     const dispatch = useAppDispatch()
     const turn = useAppSelector((state) => state.game.turn)
 
-    const [currTurn, setCurrTurn] = useState<TColor | null>(null)
-
     const time = new Date()
     time.setSeconds(time.getSeconds() + duration)
 
@@ -35,14 +33,10 @@ export default function Timer({
         },
     })
 
-    if (currTurn !== turn) {
-        if (turn === forPlayer) {
-            resume()
-        } else {
-            pause()
-        }
-        setCurrTurn(turn)
-    }
+    useEffect(() => {
+        if (turn === forPlayer) resume()
+        else pause()
+    }, [turn])
 
     const isActive = turn === forPlayer
     const activeClass = isActive ? ' active' : ''
